@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -67,9 +68,9 @@ public class SignIn extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(1080, 720));
-        setPreferredSize(new Dimension(1080, 720));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setText("Username");
 
@@ -95,6 +96,11 @@ public class SignIn extends javax.swing.JFrame {
         });
 
         jButton2.setText("Sign Up");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -103,7 +109,7 @@ public class SignIn extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
+                        .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
@@ -116,7 +122,7 @@ public class SignIn extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,7 +139,7 @@ public class SignIn extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addGap(26, 26, 26))
+                .addGap(40, 40, 40))
         );
 
         bgImage.setText(" ");
@@ -156,7 +162,7 @@ public class SignIn extends javax.swing.JFrame {
                 .addComponent(bgImage)
                 .addGap(253, 253, 253)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(265, Short.MAX_VALUE))
+                .addContainerGap(251, Short.MAX_VALUE))
         );
 
         pack();
@@ -182,20 +188,26 @@ public class SignIn extends javax.swing.JFrame {
 
         try (ResultSet rs = pst.executeQuery()) {
             if (rs.next()) {
-                if(rs.getObject("username").equals("admin")) {
+                if(rs.getObject("role").equals("admin")) {
                     // show admin menu
+                    System.out.println("admin");
                 } else {
                     // show main menu
+                    System.out.println("customer");
                 }
             } else {
-                System.out.println("Invalid username or password.");
-                System.out.println(rs.getObject("username") + "abc");
+                JOptionPane.showMessageDialog(this, "Username atau Password Salah!");
             }
         }}
     } catch (ClassNotFoundException | SQLException ex) {
         Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
     }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new SignUp().setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
