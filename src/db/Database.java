@@ -22,11 +22,16 @@ public class Database {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_management", "root", "");
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (
+            ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }
-
+    
+    public Connection getConnection() {
+        return connect;
+    }
+    
     public String users(String username, String password) {
         String role = null;
         String query = "SELECT role FROM users WHERE username=? AND password=?";
@@ -48,26 +53,28 @@ public class Database {
         return role;
     }
     
-//    public String getkamar(int room_id, String room_number) {
-//        String role = null;
-//        String query = "SELECT role FROM kamar WHERE room_type=? AND room_number=?";
-//        
-//        try (PreparedStatement pst = connect.prepareStatement(query)) {
-//            pst.setInt(1, room_id);
-//            pst.setString(2, room_number);
-//            
-//            try (ResultSet rs = pst.executeQuery()) {
-//                if (rs.next()) {
-//                    role = rs.getString("role");
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "Username or Password Salahhhhhh!");
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return role;
-//    }
+    public class ambilKamar {
+        private Connection connect;
+
+        public ambilKamar(Connection connect) {
+            this.connect = connect;
+        }
+
+        public ResultSet getKamars() {
+            String query = "SELECT * FROM kamar";
+            ResultSet rs = null;
+
+            try {
+                PreparedStatement pst = connect.prepareStatement(query);
+                rs = pst.executeQuery();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error retrieving data: " + e.getMessage());
+            }
+            return rs;
+        }
+    }
+    
     
     public boolean postKamar(String room_number, String room_type, String price, String status) {
     String query = "INSERT INTO kamar (room_number, room_type, price, status) VALUES (?, ?, ?, ?)";
