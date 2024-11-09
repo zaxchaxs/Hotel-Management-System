@@ -4,16 +4,12 @@
  */
 package menus;
 
+import dashboard.DashboardAdmin;
+import dashboard.DashboardClient;
+import db.Database;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,6 +17,7 @@ import javax.swing.JOptionPane;
  * @author Irzi Rhmtllh
  */
 public class SignIn extends javax.swing.JFrame {
+     private final Database db;
 
     /**
      * Creates new form SignIn2
@@ -30,6 +27,8 @@ public class SignIn extends javax.swing.JFrame {
         setTitle("Hotel Management System");
         setLocationRelativeTo(null);
         setBackgroundMenu("/Images/menu background.jpg");
+        
+        db = new Database();
     }
     
     private void setBackgroundMenu(String urlImg) {
@@ -177,31 +176,44 @@ public class SignIn extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordFieldActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            String username = usernameField.getText();
+            String password = passwordField.getText();
             
-    try {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-
-        try (Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_management", "root", "");
-        PreparedStatement pst = connect.prepareStatement("SELECT * FROM users WHERE username=? AND password=?")) {
-        pst.setString(1, usernameField.getText());
-        pst.setString(2, passwordField.getText());
-
-        try (ResultSet rs = pst.executeQuery()) {
-            if (rs.next()) {
-                if(rs.getObject("username").equals("admin")) {
-                    // show admin menu
-                    System.out.println("admin");
-                } else {
-                    // show main menu
-                    System.out.println("customer");
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Username atau Password Salah!");
-            }
-        }}
-    } catch (ClassNotFoundException | SQLException ex) {
-        Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
-    }
+            String role = db.users(username, password);
+            
+            if("admin".equals(role)) {
+                new DashboardAdmin().setVisible(true);
+                setVisible(false);
+            } else if  ("customer".equals(role)) {
+                    new DashboardClient().setVisible(true);
+                    setVisible(false);
+            }  else {
+            JOptionPane.showMessageDialog(this, "Username or Password is incorrect!");
+        }
+//    try {
+//        Class.forName("com.mysql.cj.jdbc.Driver");
+//
+//        try (Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_management", "root", "");
+//        PreparedStatement pst = connect.prepareStatement("SELECT * FROM users WHERE username=? AND password=?")) {
+//        pst.setString(1, usernameField.getText());
+//        pst.setString(2, passwordField.getText());
+//
+//        try (ResultSet rs = pst.executeQuery()) {
+//            if (rs.next()) {
+//                if(rs.getObject("role").equals("admin")) {
+//                       new DashboardAdmin().setVisible(true);
+//                       setVisible(false);
+//                } else {
+//                    new DashboardClient().setVisible(true);
+//                    setVisible(false);
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Username atau Password Salah!");
+//            }
+//        }}
+//    } catch (ClassNotFoundException | SQLException ex) {
+//        Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
+//    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
