@@ -4,12 +4,19 @@
  */
 package MainMenu;
 
-import dashboard.DashboardAdmin;
-import dashboard.DashboardClient;
-import db.Database;
+import Dashboards.DashboardAdmin;
+import Dashboards.DashboardClient;
+import DatabaseInstance.Database;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**

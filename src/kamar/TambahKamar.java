@@ -4,8 +4,8 @@
  */
 package kamar;
 
-import db.Database;
-import db.Database.ambilKamar;
+import DatabaseInstance.Database;
+import DatabaseInstance.Database.ambilKamar;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
