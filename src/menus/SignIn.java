@@ -179,7 +179,7 @@ public class SignIn extends javax.swing.JFrame {
             String username = usernameField.getText();
             String password = passwordField.getText();
             
-            String role = db.users(username, password);
+            String role = db.getUser(username, password);
             
             if("admin".equals(role)) {
                 new DashboardAdmin().setVisible(true);
