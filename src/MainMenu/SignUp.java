@@ -4,7 +4,8 @@
  */
 package MainMenu;
 
-import db.Database;
+
+import DatabaseInstance.Database;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.sql.Statement;

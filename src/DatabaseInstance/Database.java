@@ -77,6 +77,10 @@ public class Database {
     public boolean postUser(String username, String name, String email, String no_phone, JComboBox<String> role) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    public ambilKamar ambilKamar() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     public class ambilKamar {
         private Connection connect;
