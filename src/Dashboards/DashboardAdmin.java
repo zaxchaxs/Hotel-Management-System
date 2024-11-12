@@ -8,9 +8,11 @@ import MainMenu.SignIn;
 import Menus.AdminBookingRoom;
 import Menus.AdminRoom;
 import Menus.AdminStaff;
+import Sessions.SessionManager;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -64,7 +66,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new Dimension(1080, 720));
         setMinimumSize(new Dimension(1080, 720));
+        setPreferredSize(new Dimension(1080, 720));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -97,10 +101,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Name", "Booked Room ID", "Type", "Booking Date", "Days Booked"
@@ -191,7 +192,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        SessionManager.logout();
         new SignIn().setVisible(true);
+        JOptionPane.showMessageDialog(this, "Success Logout!");
         dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 

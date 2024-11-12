@@ -4,6 +4,8 @@
  */
 package DatabaseInstance;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Irzi Rhmtllh
@@ -11,8 +13,10 @@ package DatabaseInstance;
 public class DatabaseResultResponse {
     public int status;
     public String message;
-    public DatabaseResultResponse(int status, String message){
+    public ArrayList data;
+    public DatabaseResultResponse(int status, String message, ArrayList data){
         this.status = status;
         this.message = message;
+        this.data = data;
     }
 };

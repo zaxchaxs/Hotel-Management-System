@@ -326,15 +326,12 @@ public class SignUp extends javax.swing.JFrame {
         String email = emailField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
-        JDBCConnection jdbcConnect = null;
         Database db = new Database();
         
         if(name.equals("") || email.equals("") || username.equals("") || password.equals("")) {
           JOptionPane.showMessageDialog(this, "Harap isi semua form!");
           return;
         };
-        
-        
         
         try {
             DatabaseResultResponse response = db.registUser(email, name, username, password, "staff");
@@ -351,7 +348,7 @@ public class SignUp extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(this, "Pendaftaran gagal!\nCoba lagi!");
+            JOptionPane.showMessageDialog(this, "Register Failed!\nTry Again!");
         }
     }//GEN-LAST:event_signBtnActionPerformed
 

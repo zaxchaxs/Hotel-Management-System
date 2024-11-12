@@ -7,17 +7,12 @@ package MainMenu;
 import Dashboards.DashboardAdmin;
 import Dashboards.DashboardStaff;
 import DatabaseInstance.Database;
+import DatabaseInstance.DatabaseResultResponse;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import DataModels.User;
 
 /**
  *
@@ -74,6 +69,7 @@ public class SignIn extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(1080, 720));
+        setPreferredSize(new Dimension(1080, 720));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -155,7 +151,7 @@ public class SignIn extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(401, Short.MAX_VALUE)
+                .addContainerGap(408, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(373, 373, 373))
             .addGroup(layout.createSequentialGroup()
@@ -166,9 +162,9 @@ public class SignIn extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(bgImage)
-                .addGap(253, 253, 253)
+                .addGap(220, 220, 220)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(251, Short.MAX_VALUE))
+                .addContainerGap(284, Short.MAX_VALUE))
         );
 
         pack();
@@ -192,6 +188,7 @@ public class SignIn extends javax.swing.JFrame {
                 new DashboardAdmin().setVisible(true);
                 dispose();
             } else if  ("staff".equals(role)) {
+//                if()
                 new DashboardStaff().setVisible(true);
                 dispose();
             }  else {
