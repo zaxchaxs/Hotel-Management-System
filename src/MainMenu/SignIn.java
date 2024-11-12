@@ -5,7 +5,7 @@
 package MainMenu;
 
 import Dashboards.DashboardAdmin;
-import Dashboards.DashboardClient;
+import Dashboards.DashboardStaff;
 import DatabaseInstance.Database;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -192,7 +192,7 @@ public class SignIn extends javax.swing.JFrame {
                 new DashboardAdmin().setVisible(true);
                 dispose();
             } else if  ("staff".equals(role)) {
-                new DashboardClient().setVisible(true);
+                new DashboardStaff().setVisible(true);
                 dispose();
             }  else {
                 JOptionPane.showMessageDialog(this, "Something wrong with your role!");
