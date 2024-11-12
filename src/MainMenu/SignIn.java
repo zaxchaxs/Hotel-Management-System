@@ -190,37 +190,13 @@ public class SignIn extends javax.swing.JFrame {
             
             if("admin".equals(role)) {
                 new DashboardAdmin().setVisible(true);
-                setVisible(false);
-            } else if  ("customer".equals(role)) {
-                    new DashboardClient().setVisible(true);
-                    setVisible(false);
+                dispose();
+            } else if  ("staff".equals(role)) {
+                new DashboardClient().setVisible(true);
+                dispose();
             }  else {
-            JOptionPane.showMessageDialog(this, "Username or Password is incorrect!");
-        }
-//    try {
-//        Class.forName("com.mysql.cj.jdbc.Driver");
-//
-//        try (Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_management", "root", "");
-//        PreparedStatement pst = connect.prepareStatement("SELECT * FROM users WHERE username=? AND password=?")) {
-//        pst.setString(1, usernameField.getText());
-//        pst.setString(2, passwordField.getText());
-//
-//        try (ResultSet rs = pst.executeQuery()) {
-//            if (rs.next()) {
-//                if(rs.getObject("role").equals("admin")) {
-//                       new DashboardAdmin().setVisible(true);
-//                       setVisible(false);
-//                } else {
-//                    new DashboardClient().setVisible(true);
-//                    setVisible(false);
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Username atau Password Salah!");
-//            }
-//        }}
-//    } catch (ClassNotFoundException | SQLException ex) {
-//        Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
-//    }
+                JOptionPane.showMessageDialog(this, "Something wrong with your role!");
+            }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

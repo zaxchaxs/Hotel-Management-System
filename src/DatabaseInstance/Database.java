@@ -8,15 +8,24 @@ package DatabaseInstance;
  *
  * @author USER
  */
+import Connections.JDBCConnection;
+import MainMenu.SignIn;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Database {
     private Connection connect;
+    PreparedStatement pst = null;
+    Statement statment = null;
+    ResultSet result = null;
+    JDBCConnection jdbcConnect = new JDBCConnection();
 
     public Database() {
         try {
@@ -44,7 +53,7 @@ public class Database {
                 if (rs.next()) {
                     role = rs.getString("role");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Username or Password Salahhhhhh!");
+                    JOptionPane.showMessageDialog(null, "Username or Password Is Incorrect!");
                 }
             }
         } catch (SQLException e) {
@@ -52,6 +61,41 @@ public class Database {
         }
         return role;
     }
+    
+    public DatabaseResultResponse registUser(String email, String name, String username, String password, String role) {
+        String query = "insert into users(email, name, username, password, role) values (?, ?, ?, ?, ?)";
+        
+        try {
+//            connect = DriverManager.getConnection(jdbc. hotel_management", "root", "");
+            connect = DriverManager.getConnection(jdbcConnect.JDBCUrl+jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
+            Class.forName(jdbcConnect.classDriver);
+            statment = connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            
+            // cek email and username
+            pst = connect.prepareStatement("select * from users where email=? or username=?");
+            pst.setString(1, email);
+            pst.setString(2, username);
+            result = pst.executeQuery();
+            if(result.next()) {
+                return new DatabaseResultResponse(400, "failed");
+            };
+            
+            // Insert new user
+            pst = connect.prepareStatement(query);
+            pst.setString(1, email);
+            pst.setString(2, name);
+            pst.setString(3, username);
+            pst.setString(4, password);
+            pst.setString(5, "staff");
+            pst.executeUpdate();
+            
+            return new DatabaseResultResponse(200, "success");
+            
+        } catch (ClassNotFoundException | SQLException e) {
+            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, e);
+            return new DatabaseResultResponse(500, e.getMessage());
+        }
+    };
     
     public class ambilKamar {
         private Connection connect;

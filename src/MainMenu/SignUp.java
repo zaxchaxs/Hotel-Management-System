@@ -4,6 +4,9 @@
  */
 package MainMenu;
 
+import Connections.JDBCConnection;
+import DatabaseInstance.Database;
+import DatabaseInstance.DatabaseResultResponse;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.sql.Statement;
@@ -77,7 +80,9 @@ public class SignUp extends javax.swing.JFrame {
         bgImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new Dimension(1080, 720));
         setMinimumSize(new Dimension(1080, 720));
+        setPreferredSize(new Dimension(1080, 720));
 
         registerPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -244,7 +249,7 @@ public class SignUp extends javax.swing.JFrame {
                 .addComponent(bgImage)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(317, Short.MAX_VALUE)
+                .addContainerGap(292, Short.MAX_VALUE)
                 .addComponent(registerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(296, 296, 296))
         );
@@ -252,7 +257,7 @@ public class SignUp extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(bgImage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
                 .addComponent(registerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(140, 140, 140))
         );
@@ -321,51 +326,31 @@ public class SignUp extends javax.swing.JFrame {
         String email = emailField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
+        JDBCConnection jdbcConnect = null;
+        Database db = new Database();
         
         if(name.equals("") || email.equals("") || username.equals("") || password.equals("")) {
           JOptionPane.showMessageDialog(this, "Harap isi semua form!");
           return;
         };
         
+        
+        
         try {
-            Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_management", "root", "");
-            PreparedStatement pst = null;
-            Statement st = null;
-            ResultSet rs = null;
+            DatabaseResultResponse response = db.registUser(email, name, username, password, "staff");
             
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            st = connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            
-            // cek email and username
-            pst = connect.prepareStatement("select * from users where email=? or username=?");
-            pst.setString(1, email);
-            pst.setString(2, username);
-            rs = pst.executeQuery();
-            if(rs.next()) {
-                JOptionPane.showMessageDialog(this, "Email atau Username sudah digunakan!\n Coba yang lain!");
+            if(response.status == 400) {
+                JOptionPane.showMessageDialog(this, "Email or Username already exist!\nTry another one!");
                 return;
+            };
+            
+            if(response.status == 200) {
+                JOptionPane.showMessageDialog(this, "Register Success!");
+                new SignIn().setVisible(true);
+                dispose();
             }
-            
-            // Insert new user
-            pst = connect.prepareStatement("insert into users(email, name, username, password, role) values (?, ?, ?, ?, ?)");
-            pst.setString(1, email);
-            pst.setString(2, name);
-            pst.setString(3, username);
-            pst.setString(4, password);
-            pst.setString(5, "customer");
-            pst.executeUpdate();
-            
-            JOptionPane.showMessageDialog(this, "Pendaftaran Sukses!");
-            new SignIn().setVisible(true);
-            setVisible(false);
-            
-            emailField.setText("");
-            nameField.setText("");
-            usernameField.setText("");
-            passwordField.setText("");
-            confPasswordField.setText("");
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            Logger.getLogger(SignIn.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(this, "Pendaftaran gagal!\nCoba lagi!");
         }
     }//GEN-LAST:event_signBtnActionPerformed
