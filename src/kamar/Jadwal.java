@@ -2,27 +2,71 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package template;
+package kamar;
 
+import DatabaseInstance.Database;
+import DatabaseInstance.Database.ambilKamar;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 
 /**
  *
  * @author USER
  */
-public class Template extends javax.swing.JFrame {
-
+public class Jadwal extends javax.swing.JFrame {
+   private Database db;
+    DefaultTableModel tableKmr;
     /**
      * Creates new form DashboardAdmin
      */
-    public Template() {
+    public Jadwal() {
         initComponents();
         setTitle("Hotel Management System");
         setVisible(false);
         setLocationRelativeTo(null);
         setBackgroundMenu("/Images/menu background.jpg");
+        db = new Database();
+        initializeTableModel();
+        try {
+            dataKamar();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void initializeTableModel() {
+        tableKmr = new DefaultTableModel();
+        tableKmr.setColumnIdentifiers(new String[]{"Room Type", "Price", "Status", "Date"});
+        jadwalTabel.setModel(tableKmr);
+    }
+    
+     public final void dataKamar() throws SQLException {
+        if (db == null) {
+            db = new Database();
+        }
+
+        try {
+            ambilKamar dataKamar = db.new ambilKamar(db.getConnection());
+            ResultSet rs = dataKamar.getKamars();
+
+            while (rs.next()) {
+                Object[] row = new Object[4];
+                row[0] = rs.getString("room_type");
+                row[1] = rs.getString("price");
+                row[3] = rs.getDate("hari"); 
+                row[2] = rs.getString("status");
+                tableKmr.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
     }
     private void setBackgroundMenu(String urlImg) {
 
@@ -49,10 +93,25 @@ public class Template extends javax.swing.JFrame {
     private void initComponents() {
 
         bgImage = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jadwalTabel = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new Dimension(1080, 720));
+
+        jadwalTabel.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jadwalTabel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -61,12 +120,18 @@ public class Template extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(bgImage, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 1043, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(178, 178, 178)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(bgImage)
-                .addGap(0, 720, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(140, 140, 140))
         );
 
         pack();
@@ -89,26 +154,30 @@ public class Template extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Template.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Jadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Template.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Jadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Template.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Jadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Template.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Jadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Template().setVisible(true);
+                new Jadwal().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bgImage;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jadwalTabel;
     // End of variables declaration//GEN-END:variables
 }

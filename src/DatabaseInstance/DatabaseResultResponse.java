@@ -19,4 +19,12 @@ public class DatabaseResultResponse {
         this.message = message;
         this.data = data;
     }
+
+    public int getStatus() {
+        return status;
+    }
+    
+    public void setStatus(int status) {
+        this.status = status;
+    }
 };

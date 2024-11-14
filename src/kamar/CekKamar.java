@@ -6,6 +6,7 @@ package kamar;
 
 import DatabaseInstance.Database;
 import DatabaseInstance.Database.ambilKamar;
+import DatabaseInstance.DatabaseResultResponse;
 import template.*;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -16,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 
 /**
  *
@@ -46,7 +46,7 @@ public class CekKamar extends javax.swing.JFrame {
     
     private void initializeTableModel() {
         tableKmr = new DefaultTableModel();
-        tableKmr.setColumnIdentifiers(new String[]{"Room ID", "Room Number", "Room Type", "Price", "Status"});
+        tableKmr.setColumnIdentifiers(new String[]{"Room Number", "Room Name", "Price", "Room Type","Status"});
         tableKamar.setModel(tableKmr);
     }
     
@@ -61,11 +61,10 @@ public class CekKamar extends javax.swing.JFrame {
         
         while(rs.next()){
             Object[] row = new Object[5];
-                row[0] = rs.getInt("room_id");
-                row[1] = rs.getString("room_number");
-                row[2] = rs.getString("room_type");
-                row[3] = rs.getString("price");
-                row[4] = rs.getString("status");
+                row[0] = rs.getString("id");
+                row[1] = rs.getString("name");
+                row[2] = rs.getString("price");
+                row[3] = rs.getString("type");
                 tableKmr.addRow(row);
         }
             
@@ -90,6 +89,7 @@ public class CekKamar extends javax.swing.JFrame {
         getContentPane().add(bgImage);
         bgImage.setBounds(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
     };   
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -99,12 +99,27 @@ public class CekKamar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         bgImage = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         Harga = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableKamar = new javax.swing.JTable();
         noField = new javax.swing.JTextField();
+        Harga1 = new javax.swing.JLabel();
+        namaField = new javax.swing.JTextField();
+        Harga2 = new javax.swing.JLabel();
+        emailField = new javax.swing.JTextField();
+        Harga3 = new javax.swing.JLabel();
+        cIField = new javax.swing.JTextField();
+        Harga4 = new javax.swing.JLabel();
+        cOField = new javax.swing.JTextField();
+        Harga5 = new javax.swing.JLabel();
+        noTField = new javax.swing.JTextField();
+        Harga6 = new javax.swing.JLabel();
+        staffId = new javax.swing.JTextField();
+
+        jFormattedTextField1.setText("jFormattedTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -160,6 +175,54 @@ public class CekKamar extends javax.swing.JFrame {
             }
         });
 
+        Harga1.setText("Nama");
+
+        namaField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                namaFieldActionPerformed(evt);
+            }
+        });
+
+        Harga2.setText("Email ");
+
+        emailField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailFieldActionPerformed(evt);
+            }
+        });
+
+        Harga3.setText("Check-in-date");
+
+        cIField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cIFieldActionPerformed(evt);
+            }
+        });
+
+        Harga4.setText("Check-out-date");
+
+        cOField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cOFieldActionPerformed(evt);
+            }
+        });
+
+        Harga5.setText("no telp");
+
+        noTField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                noTFieldActionPerformed(evt);
+            }
+        });
+
+        Harga6.setText("Staff");
+
+        staffId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                staffIdActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,31 +231,83 @@ public class CekKamar extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bgImage, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
+                        .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 723, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(212, 212, 212)
-                        .addComponent(Harga, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(218, 218, 218)
-                        .addComponent(noField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Harga1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Harga, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(namaField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(noField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Harga3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Harga5, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cIField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(noTField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Harga2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Harga4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cOField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(146, 146, 146)
+                                .addComponent(Harga6, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(staffId, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(365, 365, 365)
+                        .addGap(293, 293, 293)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(292, Short.MAX_VALUE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(bgImage)
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Harga, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(noField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Harga1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(namaField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Harga5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(noTField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Harga3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cIField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Harga, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(noField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                    .addComponent(Harga2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Harga4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cOField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Harga6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(staffId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(110, 110, 110))
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -203,24 +318,43 @@ public class CekKamar extends javax.swing.JFrame {
         ambilKamar dataKamar = db.new ambilKamar(db.getConnection());
         ResultSet rs = dataKamar.getKamars();
         String noDb, roomType = null, roomPrice = null;
-         try {
+        
+        //statemnt customer
+        String name = namaField.getText();
+        int employeeId = Integer.parseInt(staffId.getText());
+        String email = emailField.getText();
+        String phoneNumber = noTField.getText();
+        String checkInDate = cIField.getText(); 
+        String checkOutDate = cOField.getText(); 
+
+     try {
         boolean roomFound = false;
 
         //cek pake loop
         while (rs.next()) {
-            noDb = rs.getString("room_number");
+            noDb = rs.getString("id");
 
             if (nomor.equals(noDb)) { 
-                roomType = rs.getString("room_type");
+                roomType = rs.getString("type");
                 roomPrice = rs.getString("price");
                 roomFound = true;
                 break;
             }
         }
 
-        if (roomFound) {
-            Confirm confirmPage = new Confirm(roomType, roomPrice);
-            confirmPage.setVisible(true);
+         if (roomFound) {
+            DatabaseResultResponse response = db.postCustomer(
+                name, employeeId, email, phoneNumber, nomor, checkInDate, checkOutDate
+            );
+
+            if (response.getStatus() == 201) {
+                JOptionPane.showMessageDialog(this, "Reservation created successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                Confirm confirmPage = new Confirm(roomType, roomPrice);
+                confirmPage.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to create reservation.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Room not found.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -236,6 +370,30 @@ public class CekKamar extends javax.swing.JFrame {
     private void noFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_noFieldActionPerformed
+
+    private void namaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_namaFieldActionPerformed
+
+    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailFieldActionPerformed
+
+    private void cIFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cIFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cIFieldActionPerformed
+
+    private void cOFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cOFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cOFieldActionPerformed
+
+    private void noTFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noTFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_noTFieldActionPerformed
+
+    private void staffIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_staffIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_staffIdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -281,10 +439,23 @@ public class CekKamar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Harga;
+    private javax.swing.JLabel Harga1;
+    private javax.swing.JLabel Harga2;
+    private javax.swing.JLabel Harga3;
+    private javax.swing.JLabel Harga4;
+    private javax.swing.JLabel Harga5;
+    private javax.swing.JLabel Harga6;
     private javax.swing.JLabel bgImage;
+    private javax.swing.JTextField cIField;
+    private javax.swing.JTextField cOField;
+    private javax.swing.JTextField emailField;
     private javax.swing.JButton jButton1;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField namaField;
     private javax.swing.JTextField noField;
+    private javax.swing.JTextField noTField;
+    private javax.swing.JTextField staffId;
     private javax.swing.JTable tableKamar;
     // End of variables declaration//GEN-END:variables
 }

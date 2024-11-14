@@ -28,12 +28,12 @@ public class Confirm extends javax.swing.JFrame {
     }
     
     public Confirm(String roomType, String roomPrice) {
-        initComponents();  // Initialize components
+        initComponents(); 
 
-        this.roomType = roomType;  // Set the room type
-        this.roomPrice = roomPrice;  // Set the room price
+        this.roomType = roomType;  
+        this.roomPrice = roomPrice;  
 
-        displayRoom();  // Display room details
+        displayRoom();
 
         setTitle("Hotel Management System");
         setVisible(true); 

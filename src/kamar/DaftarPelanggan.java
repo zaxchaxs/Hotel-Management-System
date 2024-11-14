@@ -4,16 +4,24 @@
  */
 package kamar;
 
+import DatabaseInstance.Database;
 import template.*;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author USER
  */
 public class DaftarPelanggan extends javax.swing.JFrame {
+     private Database db;
+    DefaultTableModel tableKmr;
+
 
     /**
      * Creates new form DashboardAdmin
@@ -24,6 +32,14 @@ public class DaftarPelanggan extends javax.swing.JFrame {
         setVisible(false);
         setLocationRelativeTo(null);
         setBackgroundMenu("/Images/menu background.jpg");
+        
+        db = new Database();
+        initializeTableModel();
+        try {
+            dataKamar(); 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     private void setBackgroundMenu(String urlImg) {
 
@@ -40,6 +56,37 @@ public class DaftarPelanggan extends javax.swing.JFrame {
         getContentPane().add(bgImage);
         bgImage.setBounds(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
     };   
+    
+    private void initializeTableModel() {
+        tableKmr = new DefaultTableModel();
+        tableKmr.setColumnIdentifiers(new String[]{"Room ID", "Room Number", "Room Type", "Price", "Status"});
+        tableKamar.setModel(tableKmr);
+    }
+    
+     public final void dataKamar() throws SQLException{
+        if (db == null) {
+            db = new Database();
+        }
+        
+        try {
+        Database.ambilKamar dataKamar = db.new ambilKamar(db.getConnection());
+        ResultSet rs = dataKamar.getKamars();
+        
+        while(rs.next()){
+            Object[] row = new Object[5];
+                row[0] = rs.getInt("room_id");
+                row[1] = rs.getString("room_number");
+                row[2] = rs.getString("room_type");
+                row[3] = rs.getString("price");
+                row[4] = rs.getString("status");
+                tableKmr.addRow(row);
+        }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,7 +98,7 @@ public class DaftarPelanggan extends javax.swing.JFrame {
 
         bgImage = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableKamar = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -61,7 +108,7 @@ public class DaftarPelanggan extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new Dimension(1080, 720));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableKamar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -86,7 +133,7 @@ public class DaftarPelanggan extends javax.swing.JFrame {
                 "Nomor Kamar", "Pelanggan", "Tipe Kamar", "Total Hari"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableKamar);
 
         jLabel1.setText("Daftar Pelanggan");
 
@@ -99,6 +146,11 @@ public class DaftarPelanggan extends javax.swing.JFrame {
         jLabel2.setText("Masukkan Id");
 
         jButton1.setText("Hapus");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,7 +169,7 @@ public class DaftarPelanggan extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(62, 62, 62)
+                        .addGap(232, 232, 232)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(462, Short.MAX_VALUE))
         );
@@ -125,21 +177,17 @@ public class DaftarPelanggan extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(bgImage)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(137, 137, 137))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(91, 91, 91)
-                        .addComponent(jButton1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(137, 137, 137))
         );
 
         pack();
@@ -148,6 +196,10 @@ public class DaftarPelanggan extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,7 +249,7 @@ public class DaftarPelanggan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tableKamar;
     // End of variables declaration//GEN-END:variables
 }
