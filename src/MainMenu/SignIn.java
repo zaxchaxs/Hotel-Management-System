@@ -191,8 +191,6 @@ public class SignIn extends javax.swing.JFrame {
 //                if()
                 new DashboardStaff().setVisible(true);
                 dispose();
-            }  else {
-                JOptionPane.showMessageDialog(this, "Something wrong with your role!");
             }
     }//GEN-LAST:event_jButton1ActionPerformed
 

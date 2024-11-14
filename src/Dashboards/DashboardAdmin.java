@@ -4,6 +4,8 @@
  */
 package Dashboards;
 
+import DataModels.Customer;
+import DatabaseInstance.Database;
 import MainMenu.SignIn;
 import Menus.AdminBookingRoom;
 import Menus.AdminRoom;
@@ -11,25 +13,57 @@ import Menus.AdminStaff;
 import Sessions.SessionManager;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author USER
  */
 public class DashboardAdmin extends javax.swing.JFrame {
-
-    /**
-     * Creates new form DashboardAdmin
-     */
+    DefaultTableModel listCustomerTableModel;
+    ArrayList<Customer> listCustomer;
+    Database db = new Database();
+    
     public DashboardAdmin() {
         initComponents();
         setTitle("Hotel Management System");
         setVisible(false);
         setLocationRelativeTo(null);
         setBackgroundMenu("/Images/adminBackground.jpg");
+        getCustomerData();
     }
+    
+    public void getCustomerData() {
+        listCustomer = db.getCustomer().data;
+        showDataTable();
+    };
+
+    public void showDataTable(){
+        String[] headerTableColumns = {"Name", "Room ID", "Room Name", "Type", "Check in Date", "Check out Date"};
+        Object[][] customerValue = new Object[listCustomer.size()][headerTableColumns.length];
+        
+        int i = 0;
+        for(Customer customer: listCustomer) {
+            String roomData[] = {customer.name, customer.roomId, customer.roomName, customer.roomType, customer.checkInDate, customer.checkOutDate};
+            customerValue[i] = roomData;
+            i++;
+        };
+        i = 0;
+        
+        listCustomerTableModel = new DefaultTableModel(customerValue, headerTableColumns) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            };        
+        };
+        
+        customerTable.setModel(listCustomerTableModel);
+    };    
+        
+        
     private void setBackgroundMenu(String urlImg) {
 
         Dimension screenSize = new Dimension(1080, 720);
@@ -60,15 +94,13 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        customerTable = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMaximumSize(new Dimension(1080, 720));
         setMinimumSize(new Dimension(1080, 720));
-        setPreferredSize(new Dimension(1080, 720));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -99,15 +131,15 @@ public class DashboardAdmin extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        customerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Name", "Booked Room ID", "Type", "Booking Date", "Days Booked"
+                "Name", "Reserve Room ID", "Type", "Checkin Date", "Checkout Date"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(customerTable);
 
         jLabel4.setFont(new java.awt.Font("Handycheera", 1, 48)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -235,6 +267,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bgImage;
+    private javax.swing.JTable customerTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -242,6 +275,5 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,17 +5,19 @@
 package Menus;
 
 import Dashboards.DashboardAdmin;
+import DataModels.Customer;
+import DatabaseInstance.Database;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.event.WindowAdapter;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Irzi Rhmtllh
  */
 public class AdminBookingRoom extends javax.swing.JFrame {
-
     /**
      * Creates new form AdminStaff
      */
@@ -25,8 +27,8 @@ public class AdminBookingRoom extends javax.swing.JFrame {
         setVisible(false);
         setLocationRelativeTo(null);
         setBackgroundMenu("/Images/adminBackground.jpg");
-    }
-    
+    };
+
     private void setBackgroundMenu(String urlImg) {
 
         Dimension screenSize = new Dimension(1080, 720);
