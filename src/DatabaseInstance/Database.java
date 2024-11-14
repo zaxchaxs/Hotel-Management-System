@@ -9,6 +9,7 @@ package DatabaseInstance;
  * @author USER
  */
 import Connections.JDBCConnection;
+import DataModels.Customer;
 import DataModels.Room;
 import MainMenu.SignIn;
 import Sessions.SessionManager;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.table.DefaultTableModel;
 
 public class Database {
     private Connection connect;
@@ -77,7 +79,7 @@ public class Database {
     }
     
     public DatabaseResultResponse registUser(String email, String name, String username, String password, String role) {
-        String query = "insert into users(email, name, username, password, role) values (?, ?, ?, ?, ?)";
+        String query = "insert into employee(email, name, username, password, role, status) values (?, ?, ?, ?, ?, ?)";
         
         try {
             connect = DriverManager.getConnection(jdbcConnect.JDBCUrl+jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
@@ -85,7 +87,7 @@ public class Database {
             statment = connect.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             
             // cek email and username
-            pst = connect.prepareStatement("select * from users where email=? or username=?");
+            pst = connect.prepareStatement("select * from employee where email=? or username=?");
             pst.setString(1, email);
             pst.setString(2, username);
             result = pst.executeQuery();
@@ -100,6 +102,7 @@ public class Database {
             pst.setString(3, username);
             pst.setString(4, password);
             pst.setString(5, "staff");
+            pst.setString(6, "pending");
             pst.executeUpdate();
             
             return new DatabaseResultResponse(200, "success", null);
@@ -111,7 +114,7 @@ public class Database {
     };
     
     public DatabaseResultResponse postUser(String username, String name, String email, String no_phone, String role) {
-        String query = "INSERT INTO users (username, name, email, no_phone, role) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO employee (username, name, email, no_phone, role) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pst = connect.prepareStatement(query)) {
             pst.setString(1, username);
             pst.setString(2, name);
@@ -131,7 +134,6 @@ public class Database {
             return new DatabaseResultResponse(500, "failed", null);
         }
     }
-
 
     public boolean postUser(String username, String name, String email, String no_phone, JComboBox<String> role) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -162,7 +164,6 @@ public class Database {
             return rs;
         }
     }
-    
     
     public boolean postKamar(String room_number, String room_type, String price, String status) {
         String query = "INSERT INTO kamar (room_number, room_type, price, status) VALUES (?, ?, ?, ?)";
@@ -310,6 +311,36 @@ public class Database {
             return new DatabaseResultResponse(500, e.getMessage(), null);
         }    
     }
+    
+    public DatabaseResultResponse getCustomer() {
+        String query = "SELECT customer.id, customer.name as name, employee.name as employee_name, reserved_room.room_id, room.name as room_name, room.type as room_type, reserved_room.check_in_date, reserved_room.check_out_date FROM customer JOIN reserved_room ON customer.id = reserved_room.customer_id JOIN room ON reserved_room.room_id = room.id JOIN employee ON customer.employee_id = employee.id";
+        ArrayList<Customer> listCustomer = new ArrayList<>();
+        
+        try(Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl+jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
+            PreparedStatement statment = connect.prepareStatement(query)) {
+            
+            try(ResultSet result = statment.executeQuery()) {
+                while(result.next()) {
+                    int id = result.getInt("id");
+                    String name = result.getString("name");
+                    String employeeName = result.getString("employee_name");
+                    String roomId = result.getString("room_id");
+                    String roomName = result.getString("room_name");
+                    String roomType = result.getString("room_type");
+                    String checkInDate = result.getDate("check_in_date").toString();
+                    String checkOutDate = result.getDate("check_out_date").toString();
+
+                    Customer customer = new Customer(id, name, employeeName, roomId, roomName, roomType, checkInDate, checkOutDate);
+                    listCustomer.add(customer);
+                }
+            };
+            
+            return new DatabaseResultResponse(200, "success", listCustomer);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return new DatabaseResultResponse(500, "failed", null);
+        }
+    };    
     
     public void closeConnection() {
         try {
