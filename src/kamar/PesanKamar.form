@@ -53,34 +53,33 @@
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="namaField" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
-                                  <Component id="noField" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
+                                  <Component id="paymentField" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
+                                  <Component id="roomField" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="Harga3" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
-                                  <Component id="Harga5" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
+                                  <Component id="day" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="cIField" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
-                                  <Component id="noTField" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
+                                  <Component id="dayField" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="Harga2" min="-2" pref="117" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="emailField" min="-2" pref="164" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="emailLabel" min="-2" pref="164" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="Harga2" min="-2" pref="117" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="customerField" min="-2" pref="164" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="Harga4" min="-2" pref="117" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="cOField" min="-2" pref="164" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="146" max="-2" attributes="0"/>
-                              <Component id="Harga6" min="-2" pref="117" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="staffId" min="-2" pref="164" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -104,18 +103,18 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="Harga" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                          <Component id="noField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                          <Component id="roomField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="Harga1" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                          <Component id="namaField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                          <Component id="paymentField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="Harga5" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                          <Component id="noTField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                          <Component id="day" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                          <Component id="dayField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -124,19 +123,20 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="Harga2" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                  <Component id="emailField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                  <Component id="Harga4" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                  <Component id="cOField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="Harga2" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="customerField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="Harga4" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="cOField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="Harga6" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                  <Component id="staffId" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+              <Component id="emailLabel" min="-2" pref="26" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
               <Component id="jButton1" min="-2" pref="37" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
           </Group>
@@ -182,29 +182,19 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JTextField" name="noField">
+    <Component class="javax.swing.JTextField" name="roomField">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="noFieldActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="roomFieldActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="Harga1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nama"/>
+        <Property name="text" type="java.lang.String" value="payment"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="namaField">
+    <Component class="javax.swing.JTextField" name="paymentField">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="namaFieldActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Harga2">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Email "/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="emailField">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emailFieldActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="paymentFieldActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="Harga3">
@@ -227,24 +217,26 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cOFieldActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="Harga5">
+    <Component class="javax.swing.JLabel" name="day">
       <Properties>
-        <Property name="text" type="java.lang.String" value="no telp"/>
+        <Property name="text" type="java.lang.String" value="day"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="noTField">
+    <Component class="javax.swing.JTextField" name="dayField">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="noTFieldActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dayFieldActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="Harga6">
+    <Component class="javax.swing.JLabel" name="emailLabel">
+    </Component>
+    <Component class="javax.swing.JLabel" name="Harga2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Staff"/>
+        <Property name="text" type="java.lang.String" value="Customer Id"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="staffId">
+    <Component class="javax.swing.JTextField" name="customerField">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="staffIdActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="customerFieldActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -24,7 +24,15 @@ public class DatabaseResultResponse {
         return status;
     }
     
+     public String getMessage() {
+        return message;
+    }
+     
     public void setStatus(int status) {
         this.status = status;
+    }
+    
+    public Object getData() { 
+        return data;
     }
 };

@@ -4,6 +4,7 @@
  */
 package kamar;
 
+import DataModels.Customer;
 import DatabaseInstance.Database;
 import DatabaseInstance.Database.ambilKamar;
 import DatabaseInstance.DatabaseResultResponse;
@@ -13,6 +14,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,14 +24,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author USER
  */
-public class CekKamar extends javax.swing.JFrame {
+public class PesanKamar extends javax.swing.JFrame {
     private Database db;
     DefaultTableModel tableKmr;
 
     /**
      * Creates new form DashboardAdmin
      */
-    public CekKamar() {
+    public PesanKamar() {
         initComponents();
         setTitle("Hotel Management System");
         setVisible(false);
@@ -105,19 +107,18 @@ public class CekKamar extends javax.swing.JFrame {
         Harga = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableKamar = new javax.swing.JTable();
-        noField = new javax.swing.JTextField();
+        roomField = new javax.swing.JTextField();
         Harga1 = new javax.swing.JLabel();
-        namaField = new javax.swing.JTextField();
-        Harga2 = new javax.swing.JLabel();
-        emailField = new javax.swing.JTextField();
+        paymentField = new javax.swing.JTextField();
         Harga3 = new javax.swing.JLabel();
         cIField = new javax.swing.JTextField();
         Harga4 = new javax.swing.JLabel();
         cOField = new javax.swing.JTextField();
-        Harga5 = new javax.swing.JLabel();
-        noTField = new javax.swing.JTextField();
-        Harga6 = new javax.swing.JLabel();
-        staffId = new javax.swing.JTextField();
+        day = new javax.swing.JLabel();
+        dayField = new javax.swing.JTextField();
+        emailLabel = new javax.swing.JLabel();
+        Harga2 = new javax.swing.JLabel();
+        customerField = new javax.swing.JTextField();
 
         jFormattedTextField1.setText("jFormattedTextField1");
 
@@ -169,25 +170,17 @@ public class CekKamar extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tableKamar);
 
-        noField.addActionListener(new java.awt.event.ActionListener() {
+        roomField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                noFieldActionPerformed(evt);
+                roomFieldActionPerformed(evt);
             }
         });
 
-        Harga1.setText("Nama");
+        Harga1.setText("payment");
 
-        namaField.addActionListener(new java.awt.event.ActionListener() {
+        paymentField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                namaFieldActionPerformed(evt);
-            }
-        });
-
-        Harga2.setText("Email ");
-
-        emailField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailFieldActionPerformed(evt);
+                paymentFieldActionPerformed(evt);
             }
         });
 
@@ -207,19 +200,19 @@ public class CekKamar extends javax.swing.JFrame {
             }
         });
 
-        Harga5.setText("no telp");
+        day.setText("day");
 
-        noTField.addActionListener(new java.awt.event.ActionListener() {
+        dayField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                noTFieldActionPerformed(evt);
+                dayFieldActionPerformed(evt);
             }
         });
 
-        Harga6.setText("Staff");
+        Harga2.setText("Customer Id");
 
-        staffId.addActionListener(new java.awt.event.ActionListener() {
+        customerField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                staffIdActionPerformed(evt);
+                customerFieldActionPerformed(evt);
             }
         });
 
@@ -242,29 +235,27 @@ public class CekKamar extends javax.swing.JFrame {
                                     .addComponent(Harga, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(namaField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(noField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(paymentField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(roomField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Harga3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Harga5, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(day, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cIField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(noTField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(dayField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(Harga2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Harga2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(customerField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Harga4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cOField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(146, 146, 146)
-                                .addComponent(Harga6, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(staffId, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(cOField, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(293, 293, 293)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -281,31 +272,30 @@ public class CekKamar extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Harga, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(noField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(roomField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Harga1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(namaField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(paymentField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Harga5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(noTField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(day, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dayField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Harga3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cIField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Harga2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Harga4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cOField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Harga6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(staffId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Harga2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(customerField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Harga4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cOField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(3, 3, 3)
+                .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
@@ -314,70 +304,122 @@ public class CekKamar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String nomor = noField.getText();
-        ambilKamar dataKamar = db.new ambilKamar(db.getConnection());
-        ResultSet rs = dataKamar.getKamars();
-        String noDb, roomType = null, roomPrice = null;
+        try{
+        String roomId = roomField.getText();
+            if (roomId == null || roomId.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mohon masukkan nomor kamar dengan benar");
+            return;
+        }
+                
+        String paymentText  = paymentField.getText();
+        int paymentId;
+        try {
+            paymentId = Integer.parseInt(paymentText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Mohon masukkan angka yang valid untuk ID pembayaran");
+            return;
+        }
+        if (paymentText == null || paymentText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mohon masukkan ID pembayaran yang benar");
+            return;
+        }
         
-        //statemnt customer
-        String name = namaField.getText();
-        int employeeId = Integer.parseInt(staffId.getText());
-        String email = emailField.getText();
-        String phoneNumber = noTField.getText();
+        String customerText = customerField.getText();
+        int customerId;
+         try {
+            customerId = Integer.parseInt(customerText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Mohon masukkan angka yang valid untuk Customer ID");
+            return;
+        }
+         
         String checkInDate = cIField.getText(); 
         String checkOutDate = cOField.getText(); 
-
-     try {
+        if (checkInDate == null || checkOutDate == null || checkInDate.isEmpty() || checkOutDate.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Mohon masukkan cek in dan cek out");
+        return;
+        }
+        
+        String dayText = dayField.getText();
+         int dayIn;
+         try {
+            dayIn = Integer.parseInt(dayText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Mohon masukkan angka yang valid untuk Lama hari");
+            return;
+        }
+        
+         ambilKamar dataKamar = db.new ambilKamar(db.getConnection());
+        ResultSet rs = dataKamar.getKamars();
+        String roomType = null;
+        String roomPrice = null;
         boolean roomFound = false;
-
-        //cek pake loop
+        
         while (rs.next()) {
-            noDb = rs.getString("id");
-
-            if (nomor.equals(noDb)) { 
+            String noDb = rs.getString("id");
+            if (roomId.equals(noDb)) { 
                 roomType = rs.getString("type");
                 roomPrice = rs.getString("price");
                 roomFound = true;
                 break;
             }
         }
-
-         if (roomFound) {
-            DatabaseResultResponse response = db.postCustomer(
-                name, employeeId, email, phoneNumber, nomor, checkInDate, checkOutDate
-            );
-
-            if (response.getStatus() == 201) {
-                JOptionPane.showMessageDialog(this, "Reservation created successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-
+        
+        if (!roomFound) {
+            JOptionPane.showMessageDialog(this, "Room not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        DatabaseResultResponse response = db.postReserved(
+            roomId, 
+            paymentId, 
+            customerId, 
+            checkInDate, 
+            checkOutDate,
+            dayIn
+        );
+        
+        // Handle response
+        switch (response.getStatus()) {
+            case 201:
+                JOptionPane.showMessageDialog(this, "Reservation created successfully!", 
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
                 Confirm confirmPage = new Confirm(roomType, roomPrice);
                 confirmPage.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to create reservation.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Room not found.", "Error", JOptionPane.ERROR_MESSAGE);
+                clearFields();
+                break;
+            case 400:
+                JOptionPane.showMessageDialog(this, response.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Failed to create reservation.", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                break;
         }
-
+        
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "", "Error", JOptionPane.ERROR_MESSAGE);
-        Logger.getLogger(CekKamar.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(this, "Database error occurred", "Error", JOptionPane.ERROR_MESSAGE);
+        Logger.getLogger(PesanKamar.class.getName()).log(Level.SEVERE, null, ex);
     }
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void noFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noFieldActionPerformed
+private void clearFields() {
+    roomField.setText("");
+    paymentField.setText("");
+    customerField.setText("");
+    cIField.setText("");
+    cOField.setText("");
+    dayField.setText("");
+}
+    private void roomFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_noFieldActionPerformed
+    }//GEN-LAST:event_roomFieldActionPerformed
 
-    private void namaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaFieldActionPerformed
+    private void paymentFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_namaFieldActionPerformed
-
-    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_emailFieldActionPerformed
+    }//GEN-LAST:event_paymentFieldActionPerformed
 
     private void cIFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cIFieldActionPerformed
         // TODO add your handling code here:
@@ -387,13 +429,13 @@ public class CekKamar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cOFieldActionPerformed
 
-    private void noTFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noTFieldActionPerformed
+    private void dayFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_noTFieldActionPerformed
+    }//GEN-LAST:event_dayFieldActionPerformed
 
-    private void staffIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_staffIdActionPerformed
+    private void customerFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_staffIdActionPerformed
+    }//GEN-LAST:event_customerFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -412,14 +454,22 @@ public class CekKamar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CekKamar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PesanKamar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CekKamar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PesanKamar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CekKamar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PesanKamar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CekKamar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PesanKamar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -432,7 +482,7 @@ public class CekKamar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CekKamar().setVisible(true);
+                new PesanKamar().setVisible(true);
             }
         });
     }
@@ -443,19 +493,18 @@ public class CekKamar extends javax.swing.JFrame {
     private javax.swing.JLabel Harga2;
     private javax.swing.JLabel Harga3;
     private javax.swing.JLabel Harga4;
-    private javax.swing.JLabel Harga5;
-    private javax.swing.JLabel Harga6;
     private javax.swing.JLabel bgImage;
     private javax.swing.JTextField cIField;
     private javax.swing.JTextField cOField;
-    private javax.swing.JTextField emailField;
+    private javax.swing.JTextField customerField;
+    private javax.swing.JLabel day;
+    private javax.swing.JTextField dayField;
+    private javax.swing.JLabel emailLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField namaField;
-    private javax.swing.JTextField noField;
-    private javax.swing.JTextField noTField;
-    private javax.swing.JTextField staffId;
+    private javax.swing.JTextField paymentField;
+    private javax.swing.JTextField roomField;
     private javax.swing.JTable tableKamar;
     // End of variables declaration//GEN-END:variables
 }
