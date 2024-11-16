@@ -123,9 +123,7 @@ public final class AdminRoom extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new Dimension(1080, 720));
         setMinimumSize(new Dimension(1080, 720));
-        setPreferredSize(new Dimension(1080, 720));
 
         bgImage.setText("jLabel1");
 
@@ -335,33 +333,49 @@ public final class AdminRoom extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         int selectedRow = standardRoomTable.getSelectedRow();
+        if(selectedRow < 0) return;
+        
+        String name = standardRoomTable.getValueAt(selectedRow, 1).toString();
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure want to delete " + name, "Confirm Delete", JOptionPane.YES_NO_OPTION);
         String roomId = standardRoomTable.getValueAt(selectedRow, 0).toString();
-        try {
-            DatabaseResultResponse response = db.deleteRoom(roomId);
-            if(response.status == 200) {
-                JOptionPane.showMessageDialog(this, "Success Deleting room with ID: " + roomId);
-                getRoomData();
-            } else {
-                JOptionPane.showMessageDialog(this, response.message);
-            };
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+        if(confirm == JOptionPane.YES_OPTION) {
+            try {
+                DatabaseResultResponse response = db.deleteRoom(roomId);
+                if(response.status == 200) {
+                    JOptionPane.showMessageDialog(this, "Success Deleting room with ID: " + roomId);
+                    getRoomData();
+                } else {
+                    JOptionPane.showMessageDialog(this, response.message);
+                };
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        } else {
+            return;
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int selectedRow = exclusiveRoomTable.getSelectedRow();
+        int selectedRow = standardRoomTable.getSelectedRow();
+        if(selectedRow < 0) return;
+        
+        String name = exclusiveRoomTable.getValueAt(selectedRow, 1).toString();
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure want to delete " + name, "Confirm Delete", JOptionPane.YES_NO_OPTION);
         String roomId = exclusiveRoomTable.getValueAt(selectedRow, 0).toString();
-        try {
-            DatabaseResultResponse response = db.deleteRoom(roomId);
-            if(response.status == 200) {
-                JOptionPane.showMessageDialog(this, "Success Deleting room with ID: " + roomId);
-                getRoomData();
-            } else {
-                JOptionPane.showMessageDialog(this, response.message);
-            };
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+        if(confirm == JOptionPane.YES_OPTION) {
+            try {
+                DatabaseResultResponse response = db.deleteRoom(roomId);
+                if(response.status == 200) {
+                    JOptionPane.showMessageDialog(this, "Success Deleting room with ID: " + roomId);
+                    getRoomData();
+                } else {
+                    JOptionPane.showMessageDialog(this, response.message);
+                };
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        } else {
+            return;
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -7,7 +7,7 @@ package Dashboards;
 import DataModels.Customer;
 import DatabaseInstance.Database;
 import MainMenu.SignIn;
-import Menus.AdminBookingRoom;
+import Menus.AdminReservationHistory;
 import Menus.AdminRoom;
 import Menus.AdminStaff;
 import Sessions.SessionManager;
@@ -37,17 +37,17 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }
     
     public void getCustomerData() {
-        listCustomer = db.getCustomer().data;
+        listCustomer = db.getCurrentCustomer().data;
         showDataTable();
     };
 
     public void showDataTable(){
-        String[] headerTableColumns = {"Name", "Room ID", "Room Name", "Type", "Check in Date", "Check out Date"};
+        String[] headerTableColumns = {"Name", "Room ID", "Room Name", "Type", "Check in Date", "Check out Date", "Status"};
         Object[][] customerValue = new Object[listCustomer.size()][headerTableColumns.length];
         
         int i = 0;
         for(Customer customer: listCustomer) {
-            String roomData[] = {customer.name, customer.roomId, customer.roomName, customer.roomType, customer.checkInDate, customer.checkOutDate};
+            String roomData[] = {customer.name, customer.roomId, customer.roomName, customer.roomType, customer.checkInDate, customer.checkOutDate, customer.status};
             customerValue[i] = roomData;
             i++;
         };
@@ -61,7 +61,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         };
         
         customerTable.setModel(listCustomerTableModel);
-    };    
+    };
         
         
     private void setBackgroundMenu(String urlImg) {
@@ -124,7 +124,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/accommodation.png"))); // NOI18N
-        jButton4.setText(" Check Booking ");
+        jButton4.setText("Reservation History");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -136,7 +136,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Reserve Room ID", "Type", "Checkin Date", "Checkout Date"
+                "Name", "Reserve Room ID", "Type", "Checkin Date", "Checkout Date", "Status"
             }
         ));
         jScrollPane1.setViewportView(customerTable);
@@ -219,7 +219,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        new AdminBookingRoom().setVisible(true);
+        new AdminReservationHistory();
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 

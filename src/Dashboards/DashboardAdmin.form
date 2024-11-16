@@ -129,7 +129,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Images/Icons/accommodation.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value=" Check Booking "/>
+        <Property name="text" type="java.lang.String" value="Reservation History"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
@@ -145,12 +145,13 @@
         <Component class="javax.swing.JTable" name="customerTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="5" rowCount="0">
+              <Table columnCount="6" rowCount="0">
                 <Column editable="true" title="Name" type="java.lang.Object"/>
                 <Column editable="true" title="Reserve Room ID" type="java.lang.Object"/>
                 <Column editable="true" title="Type" type="java.lang.Object"/>
                 <Column editable="true" title="Checkin Date" type="java.lang.Object"/>
                 <Column editable="true" title="Checkout Date" type="java.lang.Object"/>
+                <Column editable="true" title="Status" type="java.lang.Object"/>
               </Table>
             </Property>
           </Properties>

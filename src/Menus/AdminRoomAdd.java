@@ -67,9 +67,7 @@ public class AdminRoomAdd extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new Dimension(550, 450));
         setMinimumSize(new Dimension(550, 450));
-        setPreferredSize(new Dimension(550, 450));
         setType(java.awt.Window.Type.POPUP);
 
         bgImage.setText("bgImage");

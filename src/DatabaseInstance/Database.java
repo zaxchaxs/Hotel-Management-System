@@ -95,7 +95,7 @@ public class Database {
                 return new DatabaseResultResponse(400, "failed", null);
             };
             
-            // Insert new user
+            // Insert new employee
             pst = connect.prepareStatement(query);
             pst.setString(1, email);
             pst.setString(2, name);
@@ -113,45 +113,11 @@ public class Database {
         }
     };
     
-    public DatabaseResultResponse postUser(String username, String name, String email, String no_phone, String role) {
-        String query = "INSERT INTO employee (username, name, email, no_phone, role) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement pst = connect.prepareStatement(query)) {
-            pst.setString(1, username);
-            pst.setString(2, name);
-            pst.setString(3, email);
-            pst.setString(4, no_phone);
-            pst.setString(5, role);
+    public class ambilKamar {
+        private Connection connect;
 
-            int rowsAffected = pst.executeUpdate();
-            if(rowsAffected > 0) {
-                return new DatabaseResultResponse(200, "success", null);
-            } else {
-                return new DatabaseResultResponse(400, "failed", null);
-            }
-        } catch (SQLException e) {
-            System.err.println("Error inserting user: " + e.getMessage());
-            e.printStackTrace();
-            return new DatabaseResultResponse(500, "failed", null);
-        }
-    }
-
-    public boolean postUser(String username, String name, String email, String no_phone, JComboBox<String> role) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public ambilKamar ambilKamar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-//    public DatabaseResultResponse postReserved(Reserved reservation) {
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//    }
-    
-public class ambilKamar {
-    private Connection connect;
-
-    public ambilKamar(Connection connect) {
-        this.connect = connect;
+        public ambilKamar(Connection connect) {
+            this.connect = connect;
     }
 
     public ResultSet getKamars() {
@@ -165,36 +131,34 @@ public class ambilKamar {
             return null;
         }
     }
-}
-
-    
-    public boolean changeKamar(String number, String room_type, double price, String type, String status) {
-        String query = "UPDATE room SET room_type = ?, price = ?, status = ? WHERE room_number = ?";
-        try (PreparedStatement pst = connect.prepareStatement(query)) {
-            pst.setString(1, number);
-            pst.setString(2, room_type);
-            pst.setDouble(3, price);
-            pst.setString(4, type);
-            pst.setString(5, status);
-
-
-            int rowsAffected = pst.executeUpdate();
-            return rowsAffected > 0; 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error updating room data: " + e.getMessage());
-            return false;
-        }
     }
     
+//    public boolean changeKamar(String number, String room_type, double price, String type, String status) {
+//        String query = "UPDATE room SET room_type = ?, price = ?, status = ? WHERE room_number = ?";
+//        try (PreparedStatement pst = connect.prepareStatement(query)) {
+//            pst.setString(1, number);
+//            pst.setString(2, room_type);
+//            pst.setDouble(3, price);
+//            pst.setString(4, type);
+//            pst.setString(5, status);
+//
+//
+//            int rowsAffected = pst.executeUpdate();
+//            return rowsAffected > 0; 
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            JOptionPane.showMessageDialog(null, "Error updating room data: " + e.getMessage());
+//            return false;
+//        }
+//    }
+    
     public DatabaseResultResponse addRoom(String id, String name, int price, String type) {
-      String query = "insert into room values (?, ?, ?, ?, ?)";
+      String query = "insert into room values (?, ?, ?, ?)";
       try(PreparedStatement pst = connect.prepareStatement(query)) {
           pst.setString(1, id);
           pst.setString(2, name);
           pst.setInt(3, price);
           pst.setString(4, type);
-          pst.setString(5, "empty");
           
           int rowsAffected = pst.executeUpdate();
           if(rowsAffected > 0) {
@@ -239,9 +203,8 @@ public class ambilKamar {
                     String name = result.getString("name");
                     int price = result.getInt("price");
                     String typeRoom = result.getString("type");
-                    String status = result.getString("status");
                     
-                    Room room = new Room(id, name, typeRoom, status, price);
+                    Room room = new Room(id, name, typeRoom, price);
                     listRoom.add(room);
                 }
             };
@@ -251,6 +214,33 @@ public class ambilKamar {
             e.printStackTrace();
             return new DatabaseResultResponse(500, "failed", null);
         }
+    };
+    
+    public DatabaseResultResponse getReservedRooms(String type) {
+        String query = "SELECT room.id, room.name, room.price, room.type, reserved_room.status FROM room JOIN reserved_room ON room.id = reserved_room.room_id JOIN payment ON reserved_room.payment_id = payment.id WHERE reserved_room.status != 'completed'";
+        ArrayList<Room> listRoom = new ArrayList<>();
+        
+        try(Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl+jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
+            PreparedStatement statment = connect.prepareStatement(query)) {
+            statment.setString(1, type);
+            
+            try(ResultSet result = statment.executeQuery()) {
+                while(result.next()) {
+                    String id = result.getString("id");
+                    String name = result.getString("name");
+                    int price = result.getInt("price");
+                    String typeRoom = result.getString("type");
+                    
+                    Room room = new Room(id, name, typeRoom, price);
+                    listRoom.add(room);
+                }
+            };
+            
+            return new DatabaseResultResponse(200, "success", listRoom);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return new DatabaseResultResponse(500, "failed", null);
+        }        
     };
     
     public DatabaseResultResponse getStaff(String statusUser) {
@@ -318,10 +308,10 @@ public class ambilKamar {
         }    
     }
     
-    public DatabaseResultResponse getCustomer() {
+    public DatabaseResultResponse getCurrentCustomer() {
         String query = "SELECT customer.id, customer.name as name, employee.name as employee_name, reserved_room.room_id,"
                 + " room.name as room_name, room.type as room_type, reserved_room.check_in_date, "
-                + "reserved_room.check_out_date FROM customer JOIN reserved_room ON customer.id = reserved_room.customer_id JOIN room ON reserved_room.room_id = room.id JOIN employee ON customer.employee_id = employee.id";
+                + "reserved_room.check_out_date, reserved_room.status FROM customer JOIN reserved_room ON customer.id = reserved_room.customer_id JOIN room ON reserved_room.room_id = room.id JOIN employee ON customer.employee_id = employee.id WHERE reserved_room.status != 'completed'";
         ArrayList<Customer> listCustomer = new ArrayList<>();
         
         try(Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl+jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
@@ -337,8 +327,9 @@ public class ambilKamar {
                     String roomType = result.getString("room_type");
                     String checkInDate = result.getDate("check_in_date").toString();
                     String checkOutDate = result.getDate("check_out_date").toString();
+                    String status = result.getString("status");
 
-                    Customer customer = new Customer(id, name, employeeName, roomId, roomName, roomType, checkInDate, checkOutDate);
+                    Customer customer = new Customer(id, name, employeeName, roomId, roomName, roomType, checkInDate, checkOutDate, status);
                     listCustomer.add(customer);
                 }
             };
@@ -350,11 +341,43 @@ public class ambilKamar {
         }
     };    
     
-   public DatabaseResultResponse postCustomer(String name, int employeeId, String email, String phoneNumber, 
+    public DatabaseResultResponse getCustomerHistoryData() {
+        String query = "SELECT customer.id, customer.name as name, customer.email, customer.phone_number, employee.name as staff_name, room.id as room_id, room.name as room_name, room.type as room_type, reserved_room.check_in_date, reserved_room.check_out_date, reserved_room.status as status FROM customer JOIN reserved_room ON customer.id = reserved_room.customer_id JOIN room ON reserved_room.room_id = room.id JOIN employee ON customer.employee_id = employee.id WHERE reserved_room.status = 'completed'";
+        ArrayList<Customer> listCustomer = new ArrayList<>();
+        
+        try(Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl+jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
+            PreparedStatement statment = connect.prepareStatement(query)) {
+            
+            try(ResultSet result = statment.executeQuery()) {
+                while(result.next()) {
+                    int id = result.getInt("id");
+                    String name = result.getString("name");
+                    String email = result.getString("email");
+                    String phoneNum = result.getString("phone_number");
+                    String employeeName = result.getString("staff_name");
+                    String roomId = result.getString("room_id");
+                    String roomName = result.getString("room_name");
+                    String roomType = result.getString("room_type");
+                    String checkInDate = result.getDate("check_in_date").toString();
+                    String checkOutDate = result.getDate("check_out_date").toString();
+                    String status = result.getString("status");
+
+                    Customer customer = new Customer(id, name, email, phoneNum, employeeName, roomId, roomName, roomType, checkInDate, checkOutDate, status);
+                    listCustomer.add(customer);
+                }
+            };
+            
+            return new DatabaseResultResponse(200, "success", listCustomer);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return new DatabaseResultResponse(500, "failed", null);
+        }
+    };    
+    
+    public DatabaseResultResponse postCustomer(String name, int employeeId, String email, String phoneNumber, 
                                            String roomId, String checkInDate, String checkOutDate) {
         String customerQuery = "INSERT INTO customer (name, employee_id, email, phone_number) VALUES (?, ?, ?, ?)";
         
-
         try (Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl + jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
              PreparedStatement customerStatement = connect.prepareStatement(customerQuery)) {
 
@@ -374,27 +397,39 @@ public class ambilKamar {
             return new DatabaseResultResponse(500, "Failed to create customer", null);
         }
     }
-//   
-//   public boolean isPaymentExists(int paymentId) {
-//    String query = "SELECT COUNT(*) FROM payment WHERE id = ?";
-//    
-//    try (Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl + jdbcConnect.databaseName, 
-//                                                        jdbcConnect.databaseUsername, 
-//                                                        jdbcConnect.databasePassword);
-//         PreparedStatement stmt = connect.prepareStatement(query)) {
-//        
-//        stmt.setInt(1, paymentId);
-//        ResultSet rs = stmt.executeQuery();
-//        
-//        if (rs.next()) {
-//            return rs.getInt(1) > 0;
-//        }
-//        return false;
-//    } catch (SQLException e) {
-//        e.printStackTrace();
-//        return false;
-//    }
-//    }
+    
+    public DatabaseResultResponse deleteCustomer(String idCustomer) {
+        String query = "delete from customer where id = ?";
+        try(PreparedStatement pst = connect.prepareStatement(query)) {
+            pst.setString(1, idCustomer);
+            
+            int rowsAffected = pst.executeUpdate();
+            if(rowsAffected > 0) {
+                return new DatabaseResultResponse(200, "success", null);
+            } else {
+                return new DatabaseResultResponse(400, "failed", null);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new DatabaseResultResponse(500, e.getMessage(), null);
+        }
+    };
+    
+    public DatabaseResultResponse deleteAllCustomer() {
+        String query = "delete from customer";
+        try(PreparedStatement pst = connect.prepareStatement(query)) {
+            
+            int rowsAffected = pst.executeUpdate();
+            if(rowsAffected > 0) {
+                return new DatabaseResultResponse(200, "success", null);
+            } else {
+                return new DatabaseResultResponse(400, "failed", null);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new DatabaseResultResponse(500, e.getMessage(), null);
+        }
+    }
    
    public DatabaseResultResponse postReserved(String roomId, int paymentId, int customerId, 
                                          String checkInDate, String checkOutDate, int dayReserved) {

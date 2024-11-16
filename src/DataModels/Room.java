@@ -9,13 +9,12 @@ package DataModels;
  * @author Irzi Rhmtllh
  */
 public class Room {
-    public String roomId, name, type, status;
+    public String roomId, name, type;
     public int price;
-    public Room(String roomId, String name, String type, String status, int price ) {
+    public Room(String roomId, String name, String type, int price ) {
         this.roomId = roomId;
         this.name = name;
         this.type = type;
-        this.status = status;
         this.price = price;
     };
 };
