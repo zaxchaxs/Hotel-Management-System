@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
+import java.util.UUID;
 
 public class Database {
     private Connection connect;
@@ -374,8 +374,7 @@ public class Database {
         }
     };    
     
-    public DatabaseResultResponse postCustomer(String name, int employeeId, String email, String phoneNumber, 
-                                           String roomId, String checkInDate, String checkOutDate) {
+    public DatabaseResultResponse postCustomer(String name, int employeeId, String email, String phoneNumber) {
         String customerQuery = "INSERT INTO customer (name, employee_id, email, phone_number) VALUES (?, ?, ?, ?)";
         
         try (Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl + jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
@@ -484,6 +483,30 @@ public class Database {
             return new DatabaseResultResponse(500, "Failed to fetch reserved rooms", null);
         }
     }
+   
+   public DatabaseResultResponse addPayment(int amount,String paymentDate, String paymentMethod, String status) {
+        String query = "INSERT INTO payment(id, amount, payment_date, payment_method, status) VALUES (?, ?, ?, ?, ?)";
+         try (Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl + jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
+            PreparedStatement paymentQuery = connect.prepareStatement(query)) {
+            connect.setAutoCommit(false);
+            
+            String id = UUID.randomUUID().toString();
+            
+            //customer statement
+            paymentQuery.setString(1, id);
+            paymentQuery.setInt(2, amount);
+            paymentQuery.setString(3, paymentDate);
+            paymentQuery.setString(4, paymentMethod);
+            paymentQuery.setString(5, status);
+            paymentQuery.executeUpdate();
+            connect.commit();
+
+            return new DatabaseResultResponse(201, "Customer created successfully", null);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new DatabaseResultResponse(500, "Failed to create customer", null);
+        }
+   }
     
     public void closeConnection() {
         try {

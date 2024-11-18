@@ -4,7 +4,6 @@
  */
 package kamar;
 
-import template.*;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
