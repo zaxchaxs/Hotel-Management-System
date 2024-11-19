@@ -5,27 +5,29 @@
 package kamar;
 
 import DatabaseInstance.Database;
-import DatabaseInstance.Database.ambilKamar;
+import DatabaseInstance.DatabaseResultResponse;
+import template.*;
 import java.awt.Dimension;
 import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author USER
  */
-public class Jadwal extends javax.swing.JFrame {
-   private Database db;
-    DefaultTableModel tableKmr;
+public class CekOut extends javax.swing.JFrame {
+    private Database db;
+    DefaultTableModel resTbl;
     /**
      * Creates new form DashboardAdmin
      */
-    public Jadwal() {
+    public CekOut() {
         initComponents();
         setTitle("Hotel Management System");
         setVisible(false);
@@ -33,41 +35,47 @@ public class Jadwal extends javax.swing.JFrame {
         setBackgroundMenu("/Images/menu background.jpg");
         db = new Database();
         initializeTableModel();
-        try {
-            dataKamar();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        dataKamar();
     }
     
     private void initializeTableModel() {
-        tableKmr = new DefaultTableModel();
-        tableKmr.setColumnIdentifiers(new String[]{"id","Room Type", "Price", "Name"});
-        jadwalTabel.setModel(tableKmr);
+        resTbl = new DefaultTableModel();
+        resTbl.setColumnIdentifiers(new String[]{"Room Number", "Room Name", "Price", "Room Type","Status"});
+        reservedTable.setModel(resTbl);
     }
     
-     public final void dataKamar() throws SQLException {
-        if (db == null) {
-            db = new Database();
-        }
-
+    public final void dataKamar() {
         try {
-            ambilKamar dataKamar = db.new ambilKamar(db.getConnection());
-            ResultSet rs = dataKamar.getKamars();
+            // Fetch reserved room data using getReserved()
+            DatabaseResultResponse reservedResponse = db.getReserved();
 
-            while (rs.next()) {
-                Object[] row = new Object[4];
-                row[0] = rs.getString("id");
-                row[1] = rs.getString("type");
-                row[2] = rs.getString("price");
-                row[3] = rs.getString("name");
-                tableKmr.addRow(row);
+            if (reservedResponse.getStatus() == 200) {
+                ArrayList<HashMap<String, Object>> reservedRooms = 
+                    (ArrayList<HashMap<String, Object>>) reservedResponse.getData();
+
+                for (HashMap<String, Object> room : reservedRooms) {
+                    Object[] row = new Object[7];
+                    row[0] = room.get("id");
+                    row[1] = room.get("room_id");
+                    row[2] = room.get("payment_id");
+                    row[3] = room.get("customer_id");
+                    row[4] = room.get("check_in_date");
+                    row[5] = room.get("check_out_date");
+                    row[6] = room.get("day_reserved");
+
+                    resTbl.addRow(row); // Assuming resTbl is a table model
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: " + reservedResponse.getMessage());
             }
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
+
+
+    
     private void setBackgroundMenu(String urlImg) {
 
         Dimension screenSize = new Dimension(1080, 720);
@@ -94,13 +102,13 @@ public class Jadwal extends javax.swing.JFrame {
 
         bgImage = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jadwalTabel = new javax.swing.JTable();
+        reservedTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new Dimension(1080, 720));
 
-        jadwalTabel.setModel(new javax.swing.table.DefaultTableModel(
+        reservedTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -111,7 +119,7 @@ public class Jadwal extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jadwalTabel);
+        jScrollPane1.setViewportView(reservedTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,17 +129,17 @@ public class Jadwal extends javax.swing.JFrame {
                 .addComponent(bgImage, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 1043, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(178, 178, 178)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(81, 81, 81)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(bgImage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                .addGap(70, 70, 70)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(140, 140, 140))
+                .addGap(0, 223, Short.MAX_VALUE))
         );
 
         pack();
@@ -154,13 +162,13 @@ public class Jadwal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Jadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CekOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Jadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CekOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Jadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CekOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Jadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CekOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -170,7 +178,7 @@ public class Jadwal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Jadwal().setVisible(true);
+                new CekOut().setVisible(true);
             }
         });
     }
@@ -178,6 +186,6 @@ public class Jadwal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bgImage;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jadwalTabel;
+    private javax.swing.JTable reservedTable;
     // End of variables declaration//GEN-END:variables
 }

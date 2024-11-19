@@ -47,39 +47,36 @@
                       <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="Harga1" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
-                                  <Component id="Harga" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="Harga" min="-2" pref="117" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="paymentField" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
-                                  <Component id="roomField" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="roomField" min="-2" pref="164" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="Harga3" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
-                                  <Component id="day" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="cIField" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
-                                  <Component id="dayField" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="day" min="-2" pref="117" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="dayField" min="-2" pref="164" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="emailLabel" min="-2" pref="164" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Component id="Harga2" min="-2" pref="117" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="customerField" min="-2" pref="164" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="Harga4" min="-2" pref="117" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="Harga1" min="-2" pref="117" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="paymentField" min="-2" pref="166" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="Harga3" min="-2" pref="117" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="Harga4" min="-2" pref="117" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="cOField" min="-2" pref="164" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="cIField" min="-2" pref="164" max="-2" attributes="0"/>
+                                  <Component id="cOField" min="-2" pref="164" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
@@ -100,27 +97,22 @@
               <Component id="jScrollPane1" min="-2" pref="416" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="Harga" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                          <Component id="roomField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="Harga1" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                          <Component id="paymentField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="Harga" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="roomField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="day" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                          <Component id="dayField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="Harga3" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                          <Component id="cIField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="day" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="dayField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="Harga1" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="Harga3" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="cIField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="paymentField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -129,16 +121,14 @@
                       <Component id="Harga2" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                       <Component id="customerField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" groupAlignment="3" attributes="0">
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                       <Component id="Harga4" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                       <Component id="cOField" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-              <Component id="emailLabel" min="-2" pref="26" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
               <Component id="jButton1" min="-2" pref="37" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -170,10 +160,29 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="3" rowCount="18">
-                <Column editable="true" title="Nomor" type="java.lang.String"/>
-                <Column editable="true" title="Tipe" type="java.lang.String"/>
-                <Column editable="true" title="Harga" type="java.lang.Integer"/>
+                <Column editable="false" title="Nomor" type="java.lang.String"/>
+                <Column editable="false" title="Tipe" type="java.lang.String"/>
+                <Column editable="false" title="Harga" type="java.lang.Integer"/>
               </Table>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
             </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
@@ -189,13 +198,8 @@
     </Component>
     <Component class="javax.swing.JLabel" name="Harga1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="payment"/>
+        <Property name="text" type="java.lang.String" value="add payment method"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="paymentField">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="paymentFieldActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="Harga3">
       <Properties>
@@ -215,6 +219,9 @@
     <Component class="javax.swing.JTextField" name="cOField">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cOFieldActionPerformed"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="cOFieldKeyPressed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="cOFieldKeyReleased"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="cOFieldKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="day">
@@ -227,8 +234,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dayFieldActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="emailLabel">
-    </Component>
     <Component class="javax.swing.JLabel" name="Harga2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Customer Id"/>
@@ -238,6 +243,24 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="customerFieldActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="paymentField">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Livin Mandiri"/>
+            <StringItem index="1" value="BCA"/>
+            <StringItem index="2" value="BRI"/>
+            <StringItem index="3" value="BNI"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="paymentFieldKeyReleased"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

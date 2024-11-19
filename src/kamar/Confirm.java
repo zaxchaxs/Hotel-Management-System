@@ -4,7 +4,7 @@
  */
 package kamar;
 
-import template.*;
+import Sessions.SessionManager;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -16,9 +16,12 @@ import javax.swing.ImageIcon;
 public class Confirm extends javax.swing.JFrame {
     private String roomType;
     private String roomPrice;
+    
+    
     /**
      * Creates new form DashboardAdmin
      */
+    
     public Confirm() {
         initComponents();
         setTitle("Hotel Management System");
@@ -29,7 +32,7 @@ public class Confirm extends javax.swing.JFrame {
     
     public Confirm(String roomType, String roomPrice) {
         initComponents(); 
-
+        
         this.roomType = roomType;  
         this.roomPrice = roomPrice;  
 

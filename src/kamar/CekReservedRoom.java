@@ -4,69 +4,26 @@
  */
 package kamar;
 
-import DatabaseInstance.Database;
-import DatabaseInstance.Database.ambilKamar;
+import template.*;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.table.DefaultTableModel;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
-
 
 /**
  *
  * @author USER
  */
-public class Jadwal extends javax.swing.JFrame {
-   private Database db;
-    DefaultTableModel tableKmr;
+public class CekReservedRoom extends javax.swing.JFrame {
+
     /**
      * Creates new form DashboardAdmin
      */
-    public Jadwal() {
+    public CekReservedRoom() {
         initComponents();
         setTitle("Hotel Management System");
         setVisible(false);
         setLocationRelativeTo(null);
         setBackgroundMenu("/Images/menu background.jpg");
-        db = new Database();
-        initializeTableModel();
-        try {
-            dataKamar();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    private void initializeTableModel() {
-        tableKmr = new DefaultTableModel();
-        tableKmr.setColumnIdentifiers(new String[]{"id","Room Type", "Price", "Name"});
-        jadwalTabel.setModel(tableKmr);
-    }
-    
-     public final void dataKamar() throws SQLException {
-        if (db == null) {
-            db = new Database();
-        }
-
-        try {
-            ambilKamar dataKamar = db.new ambilKamar(db.getConnection());
-            ResultSet rs = dataKamar.getKamars();
-
-            while (rs.next()) {
-                Object[] row = new Object[4];
-                row[0] = rs.getString("id");
-                row[1] = rs.getString("type");
-                row[2] = rs.getString("price");
-                row[3] = rs.getString("name");
-                tableKmr.addRow(row);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-        }
     }
     private void setBackgroundMenu(String urlImg) {
 
@@ -94,13 +51,13 @@ public class Jadwal extends javax.swing.JFrame {
 
         bgImage = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jadwalTabel = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new Dimension(1080, 720));
 
-        jadwalTabel.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -111,7 +68,7 @@ public class Jadwal extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jadwalTabel);
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,7 +78,7 @@ public class Jadwal extends javax.swing.JFrame {
                 .addComponent(bgImage, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 1043, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(178, 178, 178)
+                .addGap(191, 191, 191)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -129,9 +86,9 @@ public class Jadwal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(bgImage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                .addGap(112, 112, 112)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(140, 140, 140))
+                .addGap(0, 181, Short.MAX_VALUE))
         );
 
         pack();
@@ -154,13 +111,13 @@ public class Jadwal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Jadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CekReservedRoom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Jadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CekReservedRoom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Jadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CekReservedRoom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Jadwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CekReservedRoom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -170,7 +127,7 @@ public class Jadwal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Jadwal().setVisible(true);
+                new CekReservedRoom().setVisible(true);
             }
         });
     }
@@ -178,6 +135,6 @@ public class Jadwal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bgImage;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jadwalTabel;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

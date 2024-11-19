@@ -15,6 +15,8 @@ public class SessionManager {
     
     public static void setCurrUser(User userData) {
         currUser = userData;
+        //temporary
+        currUser.setId(1);
     };
     
     public static User getCurrUser() {
