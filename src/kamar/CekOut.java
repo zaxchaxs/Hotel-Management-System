@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
  * @author USER
  */
 public class CekOut extends javax.swing.JFrame {
+    private JTable table;
     private Database db;
     DefaultTableModel resTbl;
     /**
@@ -40,7 +42,7 @@ public class CekOut extends javax.swing.JFrame {
     
     private void initializeTableModel() {
         resTbl = new DefaultTableModel();
-        resTbl.setColumnIdentifiers(new String[]{"Room Number", "Room Name", "Price", "Room Type","Status"});
+        resTbl.setColumnIdentifiers(new String[]{"Room Number", "Room Name", "Price", "Check in", "Check Out", "Room Type","Status"});
         reservedTable.setModel(resTbl);
     }
     
@@ -53,6 +55,8 @@ public class CekOut extends javax.swing.JFrame {
                 ArrayList<HashMap<String, Object>> reservedRooms = 
                     (ArrayList<HashMap<String, Object>>) reservedResponse.getData();
 
+                resTbl.setRowCount(0);
+                
                 for (HashMap<String, Object> room : reservedRooms) {
                     Object[] row = new Object[7];
                     row[0] = room.get("id");
