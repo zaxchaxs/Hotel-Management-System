@@ -37,7 +37,10 @@ public class StaffPaymentAdd extends javax.swing.JFrame {
         setBackgroundMenu("/Images/registMenu.jpg");
         db = new Database();
         amountField.setText(Double.toString(this.amount));
+        accNumber.setText("7381204593821");
     }
+    
+    
     private void setBackgroundMenu(String urlImg) {
 
         Dimension screenSize = new Dimension(1080, 720);
@@ -71,7 +74,7 @@ public class StaffPaymentAdd extends javax.swing.JFrame {
         paymentField = new javax.swing.JComboBox<>();
         amountField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        emailField2 = new javax.swing.JTextField();
+        accNumber = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -101,6 +104,11 @@ public class StaffPaymentAdd extends javax.swing.JFrame {
         jLabel1.setText("Payment Date");
 
         paymentField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mandiri", "BCA", "BRI", "BNI" }));
+        paymentField.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                paymentFieldItemStateChanged(evt);
+            }
+        });
         paymentField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 paymentFieldKeyReleased(evt);
@@ -115,9 +123,9 @@ public class StaffPaymentAdd extends javax.swing.JFrame {
 
         jLabel5.setText("Account Number");
 
-        emailField2.addActionListener(new java.awt.event.ActionListener() {
+        accNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailField2ActionPerformed(evt);
+                accNumberActionPerformed(evt);
             }
         });
 
@@ -141,7 +149,7 @@ public class StaffPaymentAdd extends javax.swing.JFrame {
                             .addComponent(paymentDateField)
                             .addComponent(paymentField, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(amountField)
-                            .addComponent(emailField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(accNumber, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addComponent(btn, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -157,7 +165,7 @@ public class StaffPaymentAdd extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(emailField2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(accNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -252,9 +260,25 @@ public class StaffPaymentAdd extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_amountFieldActionPerformed
 
-    private void emailField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailField2ActionPerformed
+    private void accNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accNumberActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_emailField2ActionPerformed
+    }//GEN-LAST:event_accNumberActionPerformed
+
+    private void paymentFieldItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_paymentFieldItemStateChanged
+        String payment = paymentField.getSelectedItem().toString();
+        
+        switch (payment) {
+            case "Mandiri" -> accNumber.setText("7381204593821");
+            
+            case "BCA" -> accNumber.setText("5829103748293");
+                
+            case "BRI" -> accNumber.setText("9364729293048");
+                
+            case "BNI" -> accNumber.setText("4738102957614");
+                
+            default -> throw new AssertionError();
+        }
+    }//GEN-LAST:event_paymentFieldItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -307,10 +331,10 @@ public class StaffPaymentAdd extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField accNumber;
     private javax.swing.JTextField amountField;
     private javax.swing.JLabel bgImage;
     private javax.swing.JButton btn;
-    private javax.swing.JTextField emailField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

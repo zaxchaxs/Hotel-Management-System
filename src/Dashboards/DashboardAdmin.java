@@ -224,10 +224,13 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        SessionManager.logout();
-        new SignIn().setVisible(true);
-        JOptionPane.showMessageDialog(this, "Success Logout!");
-        dispose();
+        
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
+        if(confirm == JOptionPane.YES_OPTION) {
+            new SignIn().setVisible(true);
+            dispose();
+            SessionManager.logout();
+        };
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**

@@ -10,11 +10,28 @@ package DataModels;
  */
 public class Customer {
     public int id;
-    double priceTotal;
-    public String name, employeeName, roomId, roomType, roomName, checkInDate, checkOutDate, status, phoneNumber, email;
+    public double priceTotal;
+    public String name, employeeName, reservedId, roomId, roomType, roomName, checkInDate, checkOutDate, status, phoneNumber, email;
     
     
-    // overload fulldata
+    // overload lagi, buat checkouted Room
+    public Customer(int id, String name, String email, String phoneNum, String employeeName, String reservedId, String roomId, String roomName, String roomType, String checkInDate, String checkOutDate, String status) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNum;
+        this.employeeName = employeeName;
+        this.reservedId = reservedId;
+        this.roomId = roomId;
+        this.roomName = roomName;
+        this.roomType = roomType;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.status = status;
+    };
+    
+    
+    // overload
     public Customer(int id, String name, String email, String phoneNum, String employeeName, String roomId, String roomName, String roomType, String checkInDate, String checkOutDate, String status) {
         this.id = id;
         this.name = name;
@@ -28,7 +45,6 @@ public class Customer {
         this.checkOutDate = checkOutDate;
         
     };
-    
     
     public Customer(int id, String name, String employeeName, String roomId, String roomName, String roomType, String checkInDate, String checkOutDate) {   
         this.id = id;
@@ -52,6 +68,5 @@ public class Customer {
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
         this.status = status;
-    };
-    
+    };    
 }

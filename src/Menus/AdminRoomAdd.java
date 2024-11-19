@@ -109,7 +109,7 @@ public class AdminRoomAdd extends javax.swing.JFrame {
         jLabel5.setText("Add New Room");
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 204, 51));
+        jButton1.setForeground(new java.awt.Color(0, 153, 0));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/add.png"))); // NOI18N
         jButton1.setText("Add Room");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

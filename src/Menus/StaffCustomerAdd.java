@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import DatabaseInstance.Database;
 import Contexts.SessionManager;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -196,8 +197,16 @@ public class StaffCustomerAdd extends javax.swing.JFrame {
             return;
         }
         
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        
         String name = nameField.getText();
         String email = emailField.getText();
+        
+        if (!Pattern.matches(emailRegex, email)) {
+            JOptionPane.showMessageDialog(this, "Email invalid!");
+            return;
+        } 
+        
         String noHp = phoneField.getText();
         int employeeId = SessionManager.getCurrUser().getId();
 

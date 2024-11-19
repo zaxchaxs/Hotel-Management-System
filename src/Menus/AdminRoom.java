@@ -260,7 +260,7 @@ public final class AdminRoom extends javax.swing.JFrame {
         });
 
         jButton7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(0, 255, 51));
+        jButton7.setForeground(new java.awt.Color(0, 153, 0));
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/add.png"))); // NOI18N
         jButton7.setText("Add Room");
         jButton7.addActionListener(new java.awt.event.ActionListener() {

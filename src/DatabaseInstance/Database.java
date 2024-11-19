@@ -49,8 +49,9 @@ public class Database {
         return connect;
     }
     
-    public String getUser(String username, String password) {
+    public SignInResponse getUser(String username, String password) {
         String role = null;
+        String status = null;
         String query = "SELECT * FROM employee WHERE username=? AND password=?";
         ArrayList<User> result = new ArrayList<User>();
         
@@ -62,12 +63,13 @@ public class Database {
                 if (rs.next()) {
                     
                     role = rs.getString("role");
+                    status = rs.getString("status");
                     
                     // masukin data user ke sessions manager;
                     User currUser = new User(rs.getString("username"), rs.getString("email"), rs.getString("name"), role, rs.getString("status"), rs.getInt("id"));
                     result.add(currUser);
                     SessionManager.setCurrUser(currUser);
-                    return role;
+                    return new SignInResponse("success", role, status);
                 } else {
                     JOptionPane.showMessageDialog(null, "Username or Password Is Incorrect!");
                     return null;
@@ -134,25 +136,6 @@ public class Database {
     }
     }
     
-//    public boolean changeKamar(String number, String room_type, double price, String type, String status) {
-//        String query = "UPDATE room SET room_type = ?, price = ?, status = ? WHERE room_number = ?";
-//        try (PreparedStatement pst = connect.prepareStatement(query)) {
-//            pst.setString(1, number);
-//            pst.setString(2, room_type);
-//            pst.setDouble(3, price);
-//            pst.setString(4, type);
-//            pst.setString(5, status);
-//
-//
-//            int rowsAffected = pst.executeUpdate();
-//            return rowsAffected > 0; 
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            JOptionPane.showMessageDialog(null, "Error updating room data: " + e.getMessage());
-//            return false;
-//        }
-//    }
-    
     public DatabaseResultResponse addRoom(String id, String name, int price, String type) {
       String query = "insert into room values (?, ?, ?, ?)";
       try(PreparedStatement pst = connect.prepareStatement(query)) {
@@ -218,7 +201,7 @@ public class Database {
     };
     
     public DatabaseResultResponse getReservedRooms(String type) {
-        String query = "SELECT room.id, room.name, room.price, room.type, reserved_room.status FROM room JOIN reserved_room ON room.id = reserved_room.room_id JOIN payment ON reserved_room.payment_id = payment.id WHERE reserved_room.status != 'completed'";
+        String query = "SELECT room.id, room.name, room.price, room.type, reserved_room.status FROM room JOIN reserved_room ON room.id = reserved_room.room_id JOIN payment ON reserved_room.payment_id = payment.id WHERE reserved_room.status != 'completed' AND room.type = ?";
         ArrayList<Room> listRoom = new ArrayList<>();
         
         try(Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl+jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
@@ -245,7 +228,7 @@ public class Database {
     };
     
     public DatabaseResultResponse getAvailableRooms(String type) {
-        String query = "SELECT * FROM room r WHERE NOT EXISTS ( SELECT 1 FROM reserved_room rr WHERE rr.room_id = r.id) AND r.type = ?";
+        String query = "SELECT * FROM room r WHERE r.type = ? AND NOT EXISTS ( SELECT 1 FROM reserved_room rr WHERE rr.room_id = r.id AND rr.status != 'completed')";
         ArrayList<Room> listRoom = new ArrayList<>();
         
         try(Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl+jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
@@ -358,6 +341,40 @@ public class Database {
                     String status = result.getString("status");
 
                     Customer customer = new Customer(id, name, employeeName, roomId, roomName, roomType, checkInDate, checkOutDate, status);
+                    listCustomer.add(customer);
+                }
+            };
+            
+            return new DatabaseResultResponse(200, "success", listCustomer);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return new DatabaseResultResponse(500, "failed", null);
+        }
+    };    
+    
+    public DatabaseResultResponse getCheckOutedCustomer() {
+        String query = "SELECT customer.id, customer.name as name, customer.email, customer.phone_number, employee.name as employee_name, reserved_room.id as reserved_id, reserved_room.room_id, room.name as room_name, room.type as room_type, reserved_room.check_in_date, reserved_room.check_out_date, reserved_room.status FROM customer JOIN reserved_room ON customer.id = reserved_room.customer_id JOIN room ON reserved_room.room_id = room.id JOIN employee ON customer.employee_id = employee.id WHERE reserved_room.status != 'completed' AND reserved_room.status != 'pending'";
+        ArrayList<Customer> listCustomer = new ArrayList<>();
+        
+        try(Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl+jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
+            PreparedStatement statment = connect.prepareStatement(query)) {
+            
+            try(ResultSet result = statment.executeQuery()) {
+                while(result.next()) {
+                    int id = result.getInt("id");
+                    String name = result.getString("name");
+                    String email = result.getString("email");
+                    String phoneNum = result.getString("phone_number");
+                    String employeeName = result.getString("employee_name");
+                    String reservedId = result.getString("reserved_id");
+                    String roomId = result.getString("room_id");
+                    String roomName = result.getString("room_name");
+                    String roomType = result.getString("room_type");
+                    String checkInDate = result.getDate("check_in_date").toString();
+                    String checkOutDate = result.getDate("check_out_date").toString();
+                    String status = result.getString("status");
+
+                    Customer customer = new Customer(id, name, email, phoneNum, employeeName, reservedId, roomId, roomName, roomType, checkInDate, checkOutDate, status);
                     listCustomer.add(customer);
                 }
             };
@@ -536,21 +553,16 @@ public class Database {
     }
 }
 
-   
-   public DatabaseResultResponse deleteReserved(int id) {
-    String query = "DELETE FROM reserved_room WHERE id = ?";
 
-    try (Connection connect = DriverManager.getConnection(
-            jdbcConnect.JDBCUrl + jdbcConnect.databaseName,
-            jdbcConnect.databaseUsername,
-            jdbcConnect.databasePassword);
-         PreparedStatement statement = connect.prepareStatement(query)) {
+   public DatabaseResultResponse checkOutRoom(String reservedId) {
+    String query = "UPDATE reserved_room SET STATUS = 'completed' WHERE id = ?";
 
-        statement.setInt(1, id);
+    try (PreparedStatement statement = connect.prepareStatement(query)) {
+            statement.setString(1, reservedId);
         int rowsAffected = statement.executeUpdate();
 
         if (rowsAffected > 0) {
-            return new DatabaseResultResponse(200, "Reserved room deleted successfully", null);
+            return new DatabaseResultResponse(200, "success", null);
         } else {
             return new DatabaseResultResponse(404, "Reserved room not found", null);
         }

@@ -206,7 +206,6 @@ public class StaffReservationAdd extends javax.swing.JFrame {
             DatabaseResultResponse response = db.postReserved(customerContext.getPaymentId(), customerContext.getId(), customerContext.getRoomId(), cI, cO, customerContext.getDayReserved(), priceTotal, "reserved");
             if(response.status == 200) {
                 JOptionPane.showMessageDialog(this, "Reservation Success!");
-                new DashboardStaff().setVisible(true);
                 dispose();
             }
         } catch (Exception e) {

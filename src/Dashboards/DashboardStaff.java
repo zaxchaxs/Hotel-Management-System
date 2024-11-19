@@ -8,13 +8,17 @@ import Contexts.CustomerContext;
 import Contexts.SessionManager;
 import DataModels.Room;
 import DatabaseInstance.Database;
+import MainMenu.SignIn;
+import Menus.StaffCheckOut;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import Menus.StaffCustomerAdd;
+import Menus.StaffCustomerList;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Menus.StaffReservedRoomList;
 
 public class DashboardStaff extends javax.swing.JFrame {
 
@@ -113,12 +117,17 @@ public class DashboardStaff extends javax.swing.JFrame {
         standardRoomTable = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new Dimension(1080, 720));
 
-        header.setFont(new java.awt.Font("Handycheera", 1, 24)); // NOI18N
+        header.setFont(new java.awt.Font("Handycheera", 1, 30)); // NOI18N
         header.setForeground(new java.awt.Color(255, 255, 255));
         header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         header.setText("Hello User");
@@ -200,12 +209,59 @@ public class DashboardStaff extends javax.swing.JFrame {
         );
 
         jButton7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(0, 255, 51));
+        jButton7.setForeground(new java.awt.Color(0, 153, 51));
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/hotel.png"))); // NOI18N
-        jButton7.setText("Reserve Room");
+        jButton7.setText("Check In");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/accommodation.png"))); // NOI18N
+        jButton8.setText("Reserved Room");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(255, 51, 51));
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/room.png"))); // NOI18N
+        jButton9.setText("Check Out");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        jButton10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/accommodation.png"))); // NOI18N
+        jButton10.setText("List Customer");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        jButton11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton11.setForeground(new java.awt.Color(255, 51, 51));
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/logout.png"))); // NOI18N
+        jButton11.setText("Logout");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
+        jButton12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton12.setForeground(new java.awt.Color(0, 0, 204));
+        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/refresh.png"))); // NOI18N
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
             }
         });
 
@@ -214,35 +270,58 @@ public class DashboardStaff extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bgImage, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(398, 398, 398)
                         .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(449, 449, 449)
-                        .addComponent(jButton7)))
+                        .addGap(559, 559, 559)
+                        .addComponent(jButton7)
+                        .addGap(50, 50, 50)
+                        .addComponent(jButton10))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(471, 471, 471)
+                        .addComponent(jButton11)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton12)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton8)
+                                .addGap(50, 50, 50)
+                                .addComponent(jButton9))
+                            .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                        .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(bgImage, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
-                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(54, 54, 54)
-                .addComponent(jButton7)
-                .addContainerGap(180, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton7)
+                    .addComponent(jButton8)
+                    .addComponent(jButton9)
+                    .addComponent(jButton10))
+                .addGap(27, 27, 27)
+                .addComponent(jButton11)
+                .addContainerGap(114, Short.MAX_VALUE))
         );
 
         pack();
@@ -260,7 +339,7 @@ public class DashboardStaff extends javax.swing.JFrame {
             return;
         };
         
-        if(true) {
+        if(standardSelectedRow > 0) {
             String roomId = standardRoomTable.getValueAt(standardSelectedRow, 0).toString();
             priceRoom = Double.parseDouble(standardRoomTable.getValueAt(standardSelectedRow, 2).toString());
             new CustomerContext().setRoomId(roomId);
@@ -279,6 +358,34 @@ public class DashboardStaff extends javax.swing.JFrame {
             return;
         };
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        new StaffReservedRoomList().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        new StaffCheckOut().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        new StaffCustomerList().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
+        if(confirm == JOptionPane.YES_OPTION) {
+            new SignIn().setVisible(true);
+            dispose();
+            SessionManager.logout();
+        };
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        getRoomData();
+    }//GEN-LAST:event_jButton12ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -322,7 +429,12 @@ public class DashboardStaff extends javax.swing.JFrame {
     private javax.swing.JLabel bgImage;
     private javax.swing.JTable exclusiveRoomTable;
     private javax.swing.JLabel header;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane3;

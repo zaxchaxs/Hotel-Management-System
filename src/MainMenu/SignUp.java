@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -315,6 +316,7 @@ public class SignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_emailFieldKeyTyped
 
     private void signBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signBtnActionPerformed
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
         String name = nameField.getText();
         String email = emailField.getText();
         String username = usernameField.getText();
@@ -325,6 +327,11 @@ public class SignUp extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this, "Harap isi semua form!");
           return;
         };
+        
+        if (!Pattern.matches(emailRegex, email)) {
+            JOptionPane.showMessageDialog(this, "Email invalid!");
+            return;
+        } ;
         
         try {
             DatabaseResultResponse response = db.registUser(email, name, username, password, "staff");

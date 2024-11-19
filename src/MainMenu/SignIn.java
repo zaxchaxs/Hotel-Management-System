@@ -13,6 +13,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import DataModels.User;
+import DatabaseInstance.SignInResponse;
 
 /**
  *
@@ -182,13 +183,16 @@ public class SignIn extends javax.swing.JFrame {
             String username = usernameField.getText();
             String password = passwordField.getText();
             
-            String role = db.getUser(username, password);
+            SignInResponse response = db.getUser(username, password);
             
-            if("admin".equals(role)) {
+            if(response.status.equals("pending")) {
+                JOptionPane.showMessageDialog(this, "Your Account is not Verrified\nPlease wait until Admin accepting!");
+                return;
+            }
+            if("admin".equals(response.role)) {
                 new DashboardAdmin().setVisible(true);
                 dispose();
-            } else if  ("staff".equals(role)) {
-//                if()
+            } else if  ("staff".equals(response.role)) {
                 new DashboardStaff().setVisible(true);
                 dispose();
             }
