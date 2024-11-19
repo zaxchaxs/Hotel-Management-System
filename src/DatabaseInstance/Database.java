@@ -536,17 +536,12 @@ public class Database {
     }
 }
 
-   
-   public DatabaseResultResponse deleteReserved(int id) {
-    String query = "DELETE FROM reserved_room WHERE id = ?";
 
-    try (Connection connect = DriverManager.getConnection(
-            jdbcConnect.JDBCUrl + jdbcConnect.databaseName,
-            jdbcConnect.databaseUsername,
-            jdbcConnect.databasePassword);
-         PreparedStatement statement = connect.prepareStatement(query)) {
+   public DatabaseResultResponse deleteReserved(String roomId) {
+    String query = "DELETE FROM reserved_room WHERE room_id = ?";
 
-        statement.setInt(1, id);
+    try (PreparedStatement statement = connect.prepareStatement(query)) {
+            statement.setString(1, roomId);
         int rowsAffected = statement.executeUpdate();
 
         if (rowsAffected > 0) {

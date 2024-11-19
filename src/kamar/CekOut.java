@@ -67,7 +67,7 @@ public class CekOut extends javax.swing.JFrame {
                     row[5] = room.get("payment_total");
                     row[6] = room.get("status");
 
-                    resTbl.addRow(row); // Assuming resTbl is a table model
+                    resTbl.addRow(row); 
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Error: " + reservedResponse.getMessage());
@@ -202,11 +202,11 @@ public class CekOut extends javax.swing.JFrame {
 
     if (confirm == JOptionPane.YES_OPTION) {
         try {
-            int id = Integer.parseInt(reservedTable.getValueAt(selectedRow, 0).toString());
+            String roomId = (String) reservedTable.getValueAt(selectedRow, 0);
 
-            DatabaseResultResponse response = db.deleteReserved(id);
+            DatabaseResultResponse response = db.deleteReserved(roomId);
             if (response.status == 200) {
-                JOptionPane.showMessageDialog(this, "Successfully deleted room with ID: " + id);
+                JOptionPane.showMessageDialog(this, "Successfully deleted room with ID: " + roomId);
                 dataKamar();
             } else {
                 JOptionPane.showMessageDialog(this, response.message);
