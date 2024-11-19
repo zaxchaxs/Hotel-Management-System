@@ -430,78 +430,111 @@ public class Database {
         }
     }
    
-   public DatabaseResultResponse postReserved(String roomId, int paymentId, int customerId, 
-                                         String checkInDate, String checkOutDate, int dayReserved) {
+   public DatabaseResultResponse postReserved( String paymentId,int customerId, String roomId, 
+                                         String checkInDate, String checkOutDate, int dayReserved, double priceTotal, String status) {
     
-    String query = "INSERT INTO reserved_room (room_id, payment_id, customer_id, check_in_date, check_out_date, day_reserved) " +
-                  "VALUES (?, ?, ?, ?, ?, ?)";
-    
-    try (Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl + jdbcConnect.databaseName, 
-                                                        jdbcConnect.databaseUsername, 
-                                                        jdbcConnect.databasePassword);
-         PreparedStatement reservedRoomStatement = connect.prepareStatement(query)) {
-        
-        reservedRoomStatement.setString(1, roomId);
-        reservedRoomStatement.setInt(2, paymentId);
-        reservedRoomStatement.setInt(3, customerId);
-        reservedRoomStatement.setString(4, checkInDate);
-        reservedRoomStatement.setString(5, checkOutDate);
-        reservedRoomStatement.setInt(6, dayReserved);
-        
-        reservedRoomStatement.executeUpdate();
-        return new DatabaseResultResponse(201, "Reserved room created successfully", null);
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return new DatabaseResultResponse(500, "Failed to create reserved room", null);
+    String query = "INSERT INTO reserved_room (payment_id, customer_id, room_id, check_in_date, check_out_date, " +
+                  "day_reserved, price_total, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl + jdbcConnect.databaseName, 
+                                                            jdbcConnect.databaseUsername, 
+                                                            jdbcConnect.databasePassword);
+             PreparedStatement stmt = connect.prepareStatement(query)) {
+
+            stmt.setString(1, paymentId);
+            stmt.setInt(2, customerId);
+            stmt.setString(3, roomId);
+            stmt.setString(4, checkInDate);
+            stmt.setString(5, checkOutDate);
+            stmt.setInt(6, dayReserved);
+            stmt.setDouble(7, priceTotal);
+            stmt.setString(8, status);
+
+             int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                return new DatabaseResultResponse(201, "Reserved room created successfully", null);
+            } else {
+                return new DatabaseResultResponse(400, "No rows were inserted", null);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new DatabaseResultResponse(500, "Failed to create reserved room", null);
+        }
     }
-}
 
    public DatabaseResultResponse getReserved() {
-        String query = "SELECT * FROM reserved_room";
-        ArrayList<HashMap<String, Object>> reservedRooms = new ArrayList<>();
+    String query = "SELECT * FROM reserved_room";
+    ArrayList<HashMap<String, Object>> reservedRooms = new ArrayList<>();
 
-         try (Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl + jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
-             PreparedStatement statement = connect.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
+    try (Connection connect = DriverManager.getConnection(
+            jdbcConnect.JDBCUrl + jdbcConnect.databaseName,
+            jdbcConnect.databaseUsername,
+            jdbcConnect.databasePassword);
+         PreparedStatement statement = connect.prepareStatement(query);
+         ResultSet resultSet = statement.executeQuery()) {
 
-            while (resultSet.next()) {
+        while (resultSet.next()) {
             HashMap<String, Object> data = new HashMap<>();
-            data.put("id", resultSet.getInt("id"));
-            data.put("room_id", resultSet.getString("room_id"));
+            data.put("id", resultSet.getInt("id")); 
             data.put("payment_id", resultSet.getInt("payment_id"));
             data.put("customer_id", resultSet.getInt("customer_id"));
+            data.put("room_id", resultSet.getString("room_id"));
             data.put("check_in_date", resultSet.getString("check_in_date"));
             data.put("check_out_date", resultSet.getString("check_out_date"));
             data.put("day_reserved", resultSet.getInt("day_reserved"));
+            data.put("price_total", resultSet.getDouble("price_total"));
+            data.put("status", resultSet.getString("status"));
 
             reservedRooms.add(data);
         }
 
-            return new DatabaseResultResponse(200, "Success", reservedRooms);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new DatabaseResultResponse(500, "Failed to fetch reserved rooms", null);
-        }
+        return new DatabaseResultResponse(200, "Success", reservedRooms);
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return new DatabaseResultResponse(500, "Failed to fetch reserved rooms", null);
     }
+}
+
    
-   public DatabaseResultResponse addPayment(int amount,String paymentDate, String paymentMethod, String status) {
+   public DatabaseResultResponse deleteReserved(int id) {
+    String query = "DELETE FROM reserved_room WHERE id = ?";
+
+    try (Connection connect = DriverManager.getConnection(
+            jdbcConnect.JDBCUrl + jdbcConnect.databaseName,
+            jdbcConnect.databaseUsername,
+            jdbcConnect.databasePassword);
+         PreparedStatement statement = connect.prepareStatement(query)) {
+
+        statement.setInt(1, id);
+        int rowsAffected = statement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            return new DatabaseResultResponse(200, "Reserved room deleted successfully", null);
+        } else {
+            return new DatabaseResultResponse(404, "Reserved room not found", null);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return new DatabaseResultResponse(500, "Failed to delete reserved room", null);
+    }
+}
+
+   
+   public DatabaseResultResponse addPayment(String paymentId, double amount,String paymentDate, String paymentMethod, String status) {
         String query = "INSERT INTO payment(id, amount, payment_date, payment_method, status) VALUES (?, ?, ?, ?, ?)";
          try (Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl + jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
             PreparedStatement paymentQuery = connect.prepareStatement(query)) {
-            connect.setAutoCommit(false);
-            
-            String id = UUID.randomUUID().toString();
+//            connect.setAutoCommit(false);
             
             //customer statement
-            paymentQuery.setString(1, id);
-            paymentQuery.setInt(2, amount);
+            paymentQuery.setString(1, paymentId);
+            paymentQuery.setDouble(2, amount);
             paymentQuery.setString(3, paymentDate);
             paymentQuery.setString(4, paymentMethod);
             paymentQuery.setString(5, status);
             paymentQuery.executeUpdate();
-            connect.commit();
-
-            return new DatabaseResultResponse(201, "Customer created successfully", null);
+//            connect.commit();
+            return new DatabaseResultResponse(201, "Payment method create successfully", null);
         } catch (SQLException e) {
             e.printStackTrace();
             return new DatabaseResultResponse(500, "Failed to create customer", null);

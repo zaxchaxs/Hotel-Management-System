@@ -21,6 +21,10 @@ public class User {
        this.userId = userId;
     };
     
+    public void setId(int userId ) {
+        this.userId = userId;
+    }
+    
     public String getRole() {
         return role;
     }
