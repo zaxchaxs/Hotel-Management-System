@@ -356,7 +356,7 @@ public final class AdminRoom extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int selectedRow = standardRoomTable.getSelectedRow();
+        int selectedRow = exclusiveRoomTable.getSelectedRow();
         if(selectedRow < 0) return;
         
         String name = exclusiveRoomTable.getValueAt(selectedRow, 1).toString();

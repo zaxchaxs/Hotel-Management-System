@@ -14,6 +14,7 @@ public class DatabaseResultResponse {
     public int status;
     public String message;
     public ArrayList data;
+    
     public DatabaseResultResponse(int status, String message, ArrayList data){
         this.status = status;
         this.message = message;

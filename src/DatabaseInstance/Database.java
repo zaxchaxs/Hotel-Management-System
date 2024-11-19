@@ -504,7 +504,7 @@ public class Database {
     }
 
    public DatabaseResultResponse getReserved() {
-    String query = "SELECT * FROM reserved_room";
+    String query = "SELECT id, payment_id, customer_id, room_id, check_in_date, check_out_date, day_reserved, price_total, status status FROM reserved_room";
     ArrayList<HashMap<String, Object>> reservedRooms = new ArrayList<>();
 
     try (Connection connect = DriverManager.getConnection(
@@ -517,7 +517,7 @@ public class Database {
         while (resultSet.next()) {
             HashMap<String, Object> data = new HashMap<>();
             data.put("id", resultSet.getInt("id")); 
-            data.put("payment_id", resultSet.getInt("payment_id"));
+            data.put("payment_id", resultSet.getString("payment_id"));
             data.put("customer_id", resultSet.getInt("customer_id"));
             data.put("room_id", resultSet.getString("room_id"));
             data.put("check_in_date", resultSet.getString("check_in_date"));
