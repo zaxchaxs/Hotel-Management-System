@@ -215,11 +215,23 @@ public class AdminRoomAdd extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        // parsing day reserved and validate thattttttt!
+        int price = 0;
+        try {
+            price = Integer.parseInt(priceField.getText());
+            if(price <= 0) {
+                throw new Exception();
+            };
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Please fill day price with correct number\n And above 0!");
+            return;
+        }
+        
         String roomId = roomIdField.getText();
         String name = nameField.getText();
-        int price = Integer.parseInt(priceField.getText());
         String type = typeField.getSelectedItem().toString().toLowerCase();
-        if(roomId.equals("") || name.equals("") || type.equals("") || price < 0) {
+        if(roomId.equals("") || name.equals("") || type.equals("") || price <= 0) {
             JOptionPane.showMessageDialog(this, "Please fill all the form!");
             return;
         };

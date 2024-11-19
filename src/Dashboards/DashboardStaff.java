@@ -4,31 +4,79 @@
  */
 package Dashboards;
 
+import Contexts.CustomerContext;
+import Contexts.SessionManager;
+import DataModels.Room;
+import DatabaseInstance.Database;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import MainMenu.SignIn;
-import kamar.CekOut;
-import kamar.CekReservedRoom;
-import kamar.Jadwal;
-import kamar.PesanKamar;
+import Menus.StaffCustomerAdd;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author USER
- */
 public class DashboardStaff extends javax.swing.JFrame {
 
-    /**
-     * Creates new form DashboardAdmin
-     */
+    DefaultTableModel standardRoomTableModel;
+    DefaultTableModel exclusiveRoomTableModel;
+    ArrayList<Room> listStandardRooms;
+    ArrayList<Room> listExclusiveRooms;
+    Database db = new Database();
+    SessionManager sessionManager = new SessionManager();
+    
     public DashboardStaff() {
         initComponents();
         setTitle("Hotel Management System");
         setVisible(false);
         setLocationRelativeTo(null);
-        setBackgroundMenu("/Images/menu background.jpg");
+        setBackgroundMenu("/Images/registMenu.jpg");
+        getRoomData();
+        header.setText("Hello " + sessionManager.getCurrUser().getName());
     }
+    
+    public void getRoomData() {
+        listStandardRooms = db.getAvailableRooms("standard").data;
+        listExclusiveRooms = db.getAvailableRooms("exclusive").data;
+        showDataTable();
+    };
+    
+    public void showDataTable(){
+        String[] headerTableColumns = {"Room ID", "Name", "Price", "Type"};
+        Object[][] standardRoomValue = new Object[listStandardRooms.size()][headerTableColumns.length];
+        Object[][] exclusiveRoomValue = new Object[listExclusiveRooms.size()][headerTableColumns.length];
+        int i = 0;
+        
+        for(Room room: listStandardRooms) {
+            String roomData[] = {room.roomId, room.name, room.price + "", room.type};
+            standardRoomValue[i] = roomData;
+            i++;
+        };
+        i = 0;
+        
+        for(Room room: listExclusiveRooms) {
+            String roomData[] = {room.roomId, room.name, room.price + "", room.type};
+            exclusiveRoomValue[i] = roomData;
+            i++;
+        };
+        
+        standardRoomTableModel = new DefaultTableModel(standardRoomValue, headerTableColumns) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            };        
+        };
+        exclusiveRoomTableModel = new DefaultTableModel(exclusiveRoomValue, headerTableColumns) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            };        
+        };
+        
+        standardRoomTable.setModel(standardRoomTableModel);
+        exclusiveRoomTable.setModel(exclusiveRoomTableModel);  
+    };
+    
     private void setBackgroundMenu(String urlImg) {
 
         Dimension screenSize = new Dimension(1080, 720);
@@ -44,6 +92,7 @@ public class DashboardStaff extends javax.swing.JFrame {
         getContentPane().add(bgImage);
         bgImage.setBounds(0, 0, (int) screenSize.getWidth(), (int) screenSize.getHeight());
     };   
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,134 +103,182 @@ public class DashboardStaff extends javax.swing.JFrame {
     private void initComponents() {
 
         bgImage = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
+        header = new javax.swing.JLabel();
+        panel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        exclusiveRoomTable = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        panel3 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        standardRoomTable = new javax.swing.JTable();
+        jLabel8 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new Dimension(1080, 720));
 
-        jLabel1.setText("Hai $user");
+        header.setFont(new java.awt.Font("Handycheera", 1, 24)); // NOI18N
+        header.setForeground(new java.awt.Color(255, 255, 255));
+        header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        header.setText("Hello User");
 
-        jLabel2.setText("cek in");
+        panel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        exclusiveRoomTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Room ID", "Name", "Price", "Type"
+            }
+        ));
+        jScrollPane3.setViewportView(exclusiveRoomTable);
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setText("Exclusive Room");
+
+        javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
+        panel2.setLayout(panel2Layout);
+        panel2Layout.setHorizontalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(panel2Layout.createSequentialGroup()
+                .addGap(170, 170, 170)
+                .addComponent(jLabel7)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panel2Layout.setVerticalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
+        );
+
+        panel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        standardRoomTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Room ID", "Name", "Price", "Type"
+            }
+        ));
+        jScrollPane4.setViewportView(standardRoomTable);
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel8.setText("Standar Room");
+
+        javax.swing.GroupLayout panel3Layout = new javax.swing.GroupLayout(panel3);
+        panel3.setLayout(panel3Layout);
+        panel3Layout.setHorizontalGroup(
+            panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4)
+                .addContainerGap())
+            .addGroup(panel3Layout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(jLabel8)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panel3Layout.setVerticalGroup(
+            panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3Layout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
+        );
+
+        jButton7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(0, 255, 51));
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Icons/hotel.png"))); // NOI18N
+        jButton7.setText("Reserve Room");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton7ActionPerformed(evt);
             }
         });
-
-        jButton3.setText("jButton1");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("jButton1");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Cek out");
-
-        jLabel4.setText("cek reserved room");
-
-        jButton2.setText("jButton1");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setText("jadwal");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(bgImage, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1043, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bgImage, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(398, 398, 398)
+                        .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(141, 141, 141)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(61, 61, 61)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(449, 449, 449)
+                        .addComponent(jButton7)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(bgImage, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(115, 115, 115)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 284, Short.MAX_VALUE))
+                .addGap(3, 3, 3)
+                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54)
+                .addComponent(jButton7)
+                .addContainerGap(180, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        new PesanKamar().setVisible(true);
-           setVisible(false);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        new CekReservedRoom().setVisible(true);
-           setVisible(false);
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new CekOut().setVisible(true);
-           setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new Jadwal().setVisible(true);
-           setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        Double priceRoom;
+        int standardSelectedRow = standardRoomTable.getSelectedRow();
+        int exclusiveSelectedRow = exclusiveRoomTable.getSelectedRow();
+        if(standardSelectedRow < 0 && exclusiveSelectedRow < 0) return;
+        if(standardSelectedRow > 0 && exclusiveSelectedRow > 0) {
+            JOptionPane.showMessageDialog(this, "Please select 1 room!");
+            standardRoomTable.clearSelection();
+            exclusiveRoomTable.clearSelection();
+            return;
+        };
+        
+        if(true) {
+            String roomId = standardRoomTable.getValueAt(standardSelectedRow, 0).toString();
+            priceRoom = Double.parseDouble(standardRoomTable.getValueAt(standardSelectedRow, 2).toString());
+            new CustomerContext().setRoomId(roomId);
+            new StaffCustomerAdd(priceRoom).setVisible(true);
+            standardRoomTable.clearSelection();
+            exclusiveRoomTable.clearSelection();
+            return;
+        };
+        
+        if(exclusiveSelectedRow > 0) {
+            String roomId = exclusiveRoomTable.getValueAt(standardSelectedRow, 0).toString();
+            priceRoom = Double.parseDouble(exclusiveRoomTable.getValueAt(standardSelectedRow, 2).toString());
+            new StaffCustomerAdd(priceRoom).setVisible(true);
+            standardRoomTable.clearSelection();
+            exclusiveRoomTable.clearSelection();
+            return;
+        };
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -223,14 +320,15 @@ public class DashboardStaff extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bgImage;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTable exclusiveRoomTable;
+    private javax.swing.JLabel header;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JPanel panel2;
+    private javax.swing.JPanel panel3;
+    private javax.swing.JTable standardRoomTable;
     // End of variables declaration//GEN-END:variables
 }

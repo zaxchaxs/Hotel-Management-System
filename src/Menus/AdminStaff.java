@@ -120,9 +120,7 @@ public class AdminStaff extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new Dimension(1080, 720));
         setMinimumSize(new Dimension(1080, 720));
-        setPreferredSize(new Dimension(1080, 720));
 
         bgImage.setText("jLabel1");
 
@@ -139,7 +137,7 @@ public class AdminStaff extends javax.swing.JFrame {
         jScrollPane2.setViewportView(approvedTable);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Aproved Staff");
+        jLabel1.setText("Approved Staff");
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 0, 0));

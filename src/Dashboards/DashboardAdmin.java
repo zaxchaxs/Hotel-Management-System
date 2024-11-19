@@ -10,7 +10,7 @@ import MainMenu.SignIn;
 import Menus.AdminReservationHistory;
 import Menus.AdminRoom;
 import Menus.AdminStaff;
-import Sessions.SessionManager;
+import Contexts.SessionManager;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -219,7 +219,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        new AdminReservationHistory();
+        new AdminReservationHistory().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 

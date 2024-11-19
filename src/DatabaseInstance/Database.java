@@ -9,10 +9,11 @@ package DatabaseInstance;
  * @author USER
  */
 import Connections.JDBCConnection;
+import Contexts.CustomerContext;
 import DataModels.Customer;
 import DataModels.Room;
 import MainMenu.SignIn;
-import Sessions.SessionManager;
+import Contexts.SessionManager;
 import DataModels.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -243,6 +244,33 @@ public class Database {
         }        
     };
     
+    public DatabaseResultResponse getAvailableRooms(String type) {
+        String query = "SELECT * FROM room r WHERE NOT EXISTS ( SELECT 1 FROM reserved_room rr WHERE rr.room_id = r.id) AND r.type = ?";
+        ArrayList<Room> listRoom = new ArrayList<>();
+        
+        try(Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl+jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
+            PreparedStatement statment = connect.prepareStatement(query)) {
+            statment.setString(1, type);
+            
+            try(ResultSet result = statment.executeQuery()) {
+                while(result.next()) {
+                    String id = result.getString("id");
+                    String name = result.getString("name");
+                    int price = result.getInt("price");
+                    String typeRoom = result.getString("type");
+                    
+                    Room room = new Room(id, name, typeRoom, price);
+                    listRoom.add(room);
+                }
+            };
+            
+            return new DatabaseResultResponse(200, "success", listRoom);
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return new DatabaseResultResponse(500, "failed", null);
+        }        
+    };
+    
     public DatabaseResultResponse getStaff(String statusUser) {
         String query = "SELECT id, email, username, name, role, status FROM employee WHERE role = ? AND status = ?";
         ArrayList<User> listStaff = new ArrayList<>();
@@ -374,26 +402,39 @@ public class Database {
         }
     };    
     
-    public DatabaseResultResponse postCustomer(String name, int employeeId, String email, String phoneNumber) {
+    public AddCustomerResponse postCustomer(String name, int employeeId, String email, String phoneNumber) {
         String customerQuery = "INSERT INTO customer (name, employee_id, email, phone_number) VALUES (?, ?, ?, ?)";
+        String getIdCustomer = "SELECT LAST_INSERT_ID() AS id";
         
         try (Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl + jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
-             PreparedStatement customerStatement = connect.prepareStatement(customerQuery)) {
+             PreparedStatement customerStatement = connect.prepareStatement(customerQuery);
+             PreparedStatement lastInsertIdStatement = connect.prepareStatement(getIdCustomer)) {
 
             connect.setAutoCommit(false);
 
-            //customer statement
+            // Set parameter untuk statement insert
             customerStatement.setString(1, name);
             customerStatement.setInt(2, employeeId);
             customerStatement.setString(3, email);
             customerStatement.setString(4, phoneNumber);
+
+            // Eksekusi query INSERT
             customerStatement.executeUpdate();
+
+            // Eksekusi query untuk mendapatkan last inserted ID
+            ResultSet resultSet = lastInsertIdStatement.executeQuery();
+            int generatedId = 0;
+            if (resultSet.next()) {
+                generatedId = resultSet.getInt("id");
+                new CustomerContext().setId(generatedId);
+            }
+
             connect.commit();
 
-            return new DatabaseResultResponse(201, "Customer created successfully", null);
+            return new AddCustomerResponse(200, "Customer created successfully with ID: " + generatedId, generatedId);
         } catch (SQLException e) {
             e.printStackTrace();
-            return new DatabaseResultResponse(500, "Failed to create customer", null);
+            return new AddCustomerResponse(500, "Failed to create customer", 0);
         }
     }
     
@@ -452,7 +493,7 @@ public class Database {
 
              int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
-                return new DatabaseResultResponse(201, "Reserved room created successfully", null);
+                return new DatabaseResultResponse(200, "Reserved room created successfully", null);
             } else {
                 return new DatabaseResultResponse(400, "No rows were inserted", null);
             }
@@ -524,7 +565,6 @@ public class Database {
         String query = "INSERT INTO payment(id, amount, payment_date, payment_method, status) VALUES (?, ?, ?, ?, ?)";
          try (Connection connect = DriverManager.getConnection(jdbcConnect.JDBCUrl + jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
             PreparedStatement paymentQuery = connect.prepareStatement(query)) {
-//            connect.setAutoCommit(false);
             
             //customer statement
             paymentQuery.setString(1, paymentId);
@@ -533,11 +573,13 @@ public class Database {
             paymentQuery.setString(4, paymentMethod);
             paymentQuery.setString(5, status);
             paymentQuery.executeUpdate();
-//            connect.commit();
-            return new DatabaseResultResponse(201, "Payment method create successfully", null);
+            
+            new CustomerContext().setPaymentId(paymentId);
+
+            return new DatabaseResultResponse(200, "Payment created", null);
         } catch (SQLException e) {
             e.printStackTrace();
-            return new DatabaseResultResponse(500, "Failed to create customer", null);
+            return new DatabaseResultResponse(500, "Failed to create payment", null);
         }
    }
     
