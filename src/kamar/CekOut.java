@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
  * @author USER
  */
 public class CekOut extends javax.swing.JFrame {
+    private JTable table;
     private Database db;
     DefaultTableModel resTbl;
     /**
@@ -40,7 +42,7 @@ public class CekOut extends javax.swing.JFrame {
     
     private void initializeTableModel() {
         resTbl = new DefaultTableModel();
-        resTbl.setColumnIdentifiers(new String[]{"Room Number", "Room Name", "Price", "Room Type","Status"});
+        resTbl.setColumnIdentifiers(new String[]{"Room Number", "Room Name", "Price", "Check in", "Check Out", "Day Reserved", "Payment total","Status"});
         reservedTable.setModel(resTbl);
     }
     
@@ -53,8 +55,10 @@ public class CekOut extends javax.swing.JFrame {
                 ArrayList<HashMap<String, Object>> reservedRooms = 
                     (ArrayList<HashMap<String, Object>>) reservedResponse.getData();
 
+                resTbl.setRowCount(0);
+                
                 for (HashMap<String, Object> room : reservedRooms) {
-                    Object[] row = new Object[7];
+                    Object[] row = new Object[9];
                     row[0] = room.get("id");
                     row[1] = room.get("room_id");
                     row[2] = room.get("payment_id");
@@ -62,6 +66,8 @@ public class CekOut extends javax.swing.JFrame {
                     row[4] = room.get("check_in_date");
                     row[5] = room.get("check_out_date");
                     row[6] = room.get("day_reserved");
+                    row[7] = room.get("payment_total");
+                    row[8] = room.get("status");
 
                     resTbl.addRow(row); // Assuming resTbl is a table model
                 }
