@@ -4,12 +4,15 @@
  */
 package kamar;
 
+import DataModels.Customer;
 import DatabaseInstance.Database;
+import DatabaseInstance.DatabaseResultResponse;
 import template.*;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,8 +22,8 @@ import javax.swing.table.DefaultTableModel;
  * @author USER
  */
 public class DaftarPelanggan extends javax.swing.JFrame {
-     private Database db;
-    DefaultTableModel tableKmr;
+    private Database db;
+    private DefaultTableModel custTbl;
 
 
     /**
@@ -36,13 +39,12 @@ public class DaftarPelanggan extends javax.swing.JFrame {
         db = new Database();
         initializeTableModel();
         try {
-            dataKamar(); 
+            dataCust(); 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     private void setBackgroundMenu(String urlImg) {
-
         Dimension screenSize = new Dimension(1080, 720);
 
         // background menu
@@ -58,35 +60,44 @@ public class DaftarPelanggan extends javax.swing.JFrame {
     };   
     
     private void initializeTableModel() {
-        tableKmr = new DefaultTableModel();
-        tableKmr.setColumnIdentifiers(new String[]{"Room ID", "Room Number", "Room Type", "Price", "Status"});
-        tableKamar.setModel(tableKmr);
+        custTbl = new DefaultTableModel();
+        custTbl.setColumnIdentifiers(new String[]{"Room ID", "Employee Id", "Email", "Name", "No. Hp"});
+        tableCust.setModel(custTbl);
     }
     
-     public final void dataKamar() throws SQLException{
-        if (db == null) {
-            db = new Database();
-        }
-        
-        try {
-        Database.ambilKamar dataKamar = db.new ambilKamar(db.getConnection());
-        ResultSet rs = dataKamar.getKamars();
-        
-        while(rs.next()){
-            Object[] row = new Object[5];
-                row[0] = rs.getInt("room_id");
-                row[1] = rs.getString("room_number");
-                row[2] = rs.getString("room_type");
-                row[3] = rs.getString("price");
-                row[4] = rs.getString("status");
-                tableKmr.addRow(row);
-        }
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-        }
+    public final void dataCust() throws SQLException {
+    if (db == null) {
+        db = new Database();
     }
+
+    try {
+        DatabaseResultResponse response = db.getCustomerHistoryData();
+        
+        if (response.status == 200) {
+            @SuppressWarnings("unchecked")
+            ArrayList<Customer> customerList = (ArrayList<Customer>) response.data;
+            
+            custTbl.setRowCount(0);
+
+            for (Customer customer : customerList) {
+                Object[] row = {
+                    customer.getId(),
+                    customer.getEmployeeName(),
+                    customer.getEmail(),
+                    customer.getName(),
+                    customer.getPhoneNumber()
+                };
+                custTbl.addRow(row);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Failed to load customer data: " + response.message);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+    }
+}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,7 +109,7 @@ public class DaftarPelanggan extends javax.swing.JFrame {
 
         bgImage = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableKamar = new javax.swing.JTable();
+        tableCust = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -108,7 +119,7 @@ public class DaftarPelanggan extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new Dimension(1080, 720));
 
-        tableKamar.setModel(new javax.swing.table.DefaultTableModel(
+        tableCust.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -133,7 +144,7 @@ public class DaftarPelanggan extends javax.swing.JFrame {
                 "Nomor Kamar", "Pelanggan", "Tipe Kamar", "Total Hari"
             }
         ));
-        jScrollPane1.setViewportView(tableKamar);
+        jScrollPane1.setViewportView(tableCust);
 
         jLabel1.setText("Daftar Pelanggan");
 
@@ -198,7 +209,34 @@ public class DaftarPelanggan extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = tableCust.getSelectedRow();
+    if (selectedRow < 0) {
+        JOptionPane.showMessageDialog(this, "Please select a row to delete.");
+        return;
+    }
+    
+    String name = tableCust.getValueAt(selectedRow, 1).toString();
+    String idCustomer = tableCust.getValueAt(selectedRow, 0).toString(); // Ambil kolom ID yang benar
+    
+    int confirm = JOptionPane.showConfirmDialog(null, 
+            "Are you sure want to delete customer " + name + "?", 
+            "Confirm Delete", 
+            JOptionPane.YES_NO_OPTION);
+    
+    if (confirm == JOptionPane.YES_OPTION) {
+        try {
+            System.out.println("Executing deleteCustomer for ID: " + idCustomer); // Debugging
+            DatabaseResultResponse response = db.deleteCustomer(idCustomer);
+            if (response.status == 200) {
+                JOptionPane.showMessageDialog(this, "Successfully deleted customer with ID: " + idCustomer);
+                dataCust();
+            } else {
+                JOptionPane.showMessageDialog(this, response.message);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "An error occurred: " + e.getMessage());
+        }
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -250,6 +288,6 @@ public class DaftarPelanggan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTable tableKamar;
+    private javax.swing.JTable tableCust;
     // End of variables declaration//GEN-END:variables
 }

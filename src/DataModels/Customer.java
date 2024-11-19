@@ -54,4 +54,10 @@ public class Customer {
         this.status = status;
     };
     
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public String getEmail() { return email; }
+    public String getPhoneNumber() { return phoneNumber; }
+    public String getEmployeeName() { return employeeName; }
+    
 }
