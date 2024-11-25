@@ -283,7 +283,7 @@ public class AdminRoomAdd extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminRoomAdd().setVisible(true);
+                new AdminRoomAdd().setVisible(false);
             }
         });
     }

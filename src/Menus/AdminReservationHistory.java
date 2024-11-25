@@ -319,7 +319,7 @@ public class AdminReservationHistory extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminReservationHistory().setVisible(true);
+                new AdminReservationHistory().setVisible(false);
             }
         });
     }

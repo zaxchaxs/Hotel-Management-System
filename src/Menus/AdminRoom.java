@@ -412,7 +412,7 @@ public final class AdminRoom extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminRoom().setVisible(true);
+                new AdminRoom().setVisible(false);
             }
         });
     }

@@ -325,7 +325,7 @@ public class StaffPaymentAdd extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StaffPaymentAdd(0.0).setVisible(true);
+                new StaffPaymentAdd(0.0).setVisible(false);
             }
         });
     }
