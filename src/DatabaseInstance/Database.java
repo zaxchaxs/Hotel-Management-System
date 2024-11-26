@@ -46,7 +46,14 @@ public class Database {
     }
     
     public Connection getConnection() {
-        return connect;
+        try {
+            Class.forName(jdbcConnect.classDriver);
+            return connect = DriverManager.getConnection(jdbcConnect.JDBCUrl+jdbcConnect.databaseName, jdbcConnect.databaseUsername, jdbcConnect.databasePassword);
+        } catch (
+            ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
     
     public SignInResponse getUser(String username, String password) {
@@ -55,6 +62,7 @@ public class Database {
         String query = "SELECT * FROM employee WHERE username=? AND password=?";
         ArrayList<User> result = new ArrayList<User>();
         
+        connect = getConnection();
         try (PreparedStatement pst = connect.prepareStatement(query)) {
             pst.setString(1, username);
             pst.setString(2, password);

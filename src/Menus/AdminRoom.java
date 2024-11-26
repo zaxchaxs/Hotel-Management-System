@@ -333,7 +333,10 @@ public final class AdminRoom extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         int selectedRow = standardRoomTable.getSelectedRow();
-        if(selectedRow < 0) return;
+        if(selectedRow <0) {
+            JOptionPane.showMessageDialog(this, "Please Select room to delete");
+            return;
+        };
         
         String name = standardRoomTable.getValueAt(selectedRow, 1).toString();
         int confirm = JOptionPane.showConfirmDialog(null, "Are you sure want to delete " + name, "Confirm Delete", JOptionPane.YES_NO_OPTION);
@@ -357,8 +360,10 @@ public final class AdminRoom extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int selectedRow = exclusiveRoomTable.getSelectedRow();
-        if(selectedRow < 0) return;
-        
+        if(selectedRow <0) {
+            JOptionPane.showMessageDialog(this, "Please Select room to delete");
+            return;
+        };
         String name = exclusiveRoomTable.getValueAt(selectedRow, 1).toString();
         int confirm = JOptionPane.showConfirmDialog(null, "Are you sure want to delete " + name, "Confirm Delete", JOptionPane.YES_NO_OPTION);
         String roomId = exclusiveRoomTable.getValueAt(selectedRow, 0).toString();

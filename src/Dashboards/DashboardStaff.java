@@ -331,7 +331,13 @@ public class DashboardStaff extends javax.swing.JFrame {
         Double priceRoom;
         int standardSelectedRow = standardRoomTable.getSelectedRow();
         int exclusiveSelectedRow = exclusiveRoomTable.getSelectedRow();
-        if(standardSelectedRow < 0 && exclusiveSelectedRow < 0) return;
+        if(standardSelectedRow < 0 && exclusiveSelectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Please select 1 room!");
+            standardRoomTable.clearSelection();
+            exclusiveRoomTable.clearSelection();
+            return;
+        };
+        
         if(standardSelectedRow > 0 && exclusiveSelectedRow > 0) {
             JOptionPane.showMessageDialog(this, "Please select 1 room!");
             standardRoomTable.clearSelection();
@@ -350,8 +356,8 @@ public class DashboardStaff extends javax.swing.JFrame {
         };
         
         if(exclusiveSelectedRow > 0) {
-            String roomId = exclusiveRoomTable.getValueAt(standardSelectedRow, 0).toString();
-            priceRoom = Double.parseDouble(exclusiveRoomTable.getValueAt(standardSelectedRow, 2).toString());
+            String roomId = exclusiveRoomTable.getValueAt(exclusiveSelectedRow, 0).toString();
+            priceRoom = Double.parseDouble(exclusiveRoomTable.getValueAt(exclusiveSelectedRow, 2).toString());
             new StaffCustomerAdd(priceRoom).setVisible(true);
             standardRoomTable.clearSelection();
             exclusiveRoomTable.clearSelection();
@@ -420,7 +426,7 @@ public class DashboardStaff extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DashboardStaff().setVisible(true);
+                new DashboardStaff().setVisible(false);
             }
         });
     }

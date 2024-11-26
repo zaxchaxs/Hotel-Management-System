@@ -14,9 +14,9 @@ public class SessionManager {
     private static User currUser;
 
     // temp
-    public SessionManager() {
-        currUser = new User("username", "email", "Testing", "staff", "approved", 1);
-    };
+//    public SessionManager() {
+//        currUser = new User("username", "email", "Testing", "staff", "approved", 1);
+//    };
     
     public static void setCurrUser(User userData) {
         currUser = userData;

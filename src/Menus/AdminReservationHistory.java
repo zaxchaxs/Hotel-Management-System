@@ -252,7 +252,10 @@ public class AdminReservationHistory extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         int selectedRow = resultTable.getSelectedRow();
-        if(selectedRow < 0) return;
+        if(selectedRow <0) {
+            JOptionPane.showMessageDialog(this, "Please Select customer history to delete");
+            return;
+        };
         
         String name = resultTable.getValueAt(selectedRow, 1).toString();
         int confirm = JOptionPane.showConfirmDialog(null, "Are you sure want to delete " + name + "\nreservation history?", "Confirm Delete", JOptionPane.YES_NO_OPTION);

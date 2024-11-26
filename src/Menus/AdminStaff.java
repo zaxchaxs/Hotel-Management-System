@@ -325,7 +325,11 @@ public class AdminStaff extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
                  
         int selectedRow = pendingTable.getSelectedRow();
-        if(selectedRow <0) return;
+        
+        if(selectedRow <0) {
+            JOptionPane.showMessageDialog(this, "Please Select Staff to decline");
+            return;
+        };
         
         String username = pendingTable.getValueAt(selectedRow, 2).toString();
         String name = pendingTable.getValueAt(selectedRow, 1).toString();
@@ -349,7 +353,10 @@ public class AdminStaff extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int selectedRow = approvedTable.getSelectedRow();
-        if(selectedRow <0) return;
+        if(selectedRow <0) {
+            JOptionPane.showMessageDialog(this, "Please Select Staff to delete");
+            return;
+        };
         String username = approvedTable.getValueAt(selectedRow, 2).toString();
         String name = approvedTable.getValueAt(selectedRow, 1).toString();
         int confirm = JOptionPane.showConfirmDialog(null, "Are you sure want to delete " + name, "Confirm Delete", JOptionPane.YES_NO_OPTION);
@@ -372,7 +379,10 @@ public class AdminStaff extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int selectedRow = pendingTable.getSelectedRow();
-        if(selectedRow <0) return;
+        if(selectedRow <0) {
+            JOptionPane.showMessageDialog(this, "Please Select Staff to approve");
+            return;
+        };
         String username = pendingTable.getValueAt(selectedRow, 2).toString();
         String name = pendingTable.getValueAt(selectedRow, 1).toString();
         int confirm = JOptionPane.showConfirmDialog(null, "Are you sure want to approving " + name, "Confirm", JOptionPane.YES_NO_OPTION);
