@@ -21,7 +21,7 @@ The **Hotel Management System** is a desktop application built with Java to assi
    git clone https://github.com/zaxchaxs/Hotel-Management-System.git
 2. Open the project
 3. Create database with named "hotel_management"
-4. Download [SQL File]() and import to that database
+4. Download [SQL File](hotel_management.sql) and import to that database
 5. Run the App in
    src\MainMenu\App.java
 
